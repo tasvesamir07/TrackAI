@@ -5,6 +5,12 @@ const dotenv = require('dotenv');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+// Force Vercel to bundle PostgreSQL driver
+try {
+    require('pg');
+    require('pg-hstore');
+} catch (e) { }
+
 dotenv.config();
 
 const app = express();
@@ -26,7 +32,7 @@ const sequelize = process.env.DATABASE_URL
     })
     : new Sequelize({
         dialect: 'sqlite',
-        storage: './database.sqlite'
+        storage: '/tmp/database.sqlite'
     });
 
 const User = sequelize.define('User', {
