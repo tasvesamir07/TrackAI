@@ -16,7 +16,7 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors());
+app.use(cors({ origin: true, credentials: true })); // Allow all origins to fix preview domain CORS issues
 app.use(express.json());
 
 const sequelize = process.env.DATABASE_URL
