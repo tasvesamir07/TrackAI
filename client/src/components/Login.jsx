@@ -124,18 +124,18 @@ const Login = ({ setToken }) => {
             </div>
 
             {/* Right Side: Visual */}
-            <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-blue-600 via-blue-500 to-indigo-600 items-center justify-center relative overflow-hidden">
+            <div className="hidden md:flex md:w-1/2 bg-slate-50 items-center justify-center relative overflow-hidden">
                 {/* Animated Background Elements */}
-                <div className="absolute top-[-10%] right-[-10%] w-[80%] h-[80%] bg-white/10 rounded-full blur-[120px]" />
-                <div className="absolute bottom-[-10%] left-[-10%] w-[60%] h-[60%] bg-indigo-900/20 rounded-full blur-[100px]" />
+                <div className="absolute top-[-10%] right-[-10%] w-[80%] h-[80%] bg-blue-100/50 rounded-full blur-[120px]" />
+                <div className="absolute bottom-[-10%] left-[-10%] w-[60%] h-[60%] bg-indigo-100/30 rounded-full blur-[100px]" />
 
                 <div className="relative z-10 text-center px-12">
                     <div className="mb-12 relative inline-block">
-                        <div className="absolute -inset-4 bg-white/20 blur-2xl rounded-full animate-pulse" />
-                        <div className="relative bg-white/10 backdrop-blur-md p-8 rounded-[3rem] border border-white/20 shadow-2xl">
-                            <div className="bg-white rounded-3xl p-6 shadow-2xl space-y-4 w-72 transform rotate-2">
+                        <div className="absolute -inset-4 bg-blue-500/10 blur-2xl rounded-full animate-pulse" />
+                        <div className="relative bg-white/80 backdrop-blur-md p-8 rounded-[3rem] border border-blue-100 shadow-xl">
+                            <div className="bg-white rounded-3xl p-6 shadow-2xl space-y-4 w-72 transform rotate-2 border border-slate-50">
                                 <div className="flex items-center gap-4">
-                                    <div className="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center font-black">L</div>
+                                    <div className="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center font-black">L</div>
                                     <div className="flex-1 space-y-2">
                                         <div className="h-2 w-20 bg-slate-100 rounded" />
                                         <div className="h-2 w-28 bg-slate-50 rounded" />
@@ -161,13 +161,13 @@ const Login = ({ setToken }) => {
                         </motion.div>
                     </div>
 
-                    <h2 className="text-4xl font-black text-white mb-4 tracking-tight">Streamline Your Production</h2>
-                    <p className="text-blue-100 text-lg font-medium opacity-80 max-w-[440px] mx-auto leading-relaxed">
+                    <h2 className="text-4xl font-black text-slate-900 mb-4 tracking-tight">Streamline Your Production</h2>
+                    <p className="text-slate-500 text-lg font-medium max-w-[440px] mx-auto leading-relaxed">
                         Centralized daily tracking and future goal monitoring for modern high-performance teams.
                     </p>
                 </div>
 
-                <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
+                <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-slate-100/50 to-transparent pointer-events-none" />
             </div>
         </div>
     );

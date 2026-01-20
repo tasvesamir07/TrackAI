@@ -42,7 +42,7 @@ const AdminDashboard = ({ setToken }) => {
 
     const fetchLogs = async () => {
         try {
-            const res = await axios.get(`${API_URL}/api/work-logs/admin?date=${date}`, {
+            const res = await axios.get(`${API_URL}/api/work-logs?date=${date}`, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
             });
             setLogs(res.data);
@@ -90,14 +90,14 @@ const AdminDashboard = ({ setToken }) => {
 
     const downloadPDF = () => {
         const doc = new jsPDF();
-        doc.setFillColor(2, 6, 23);
+        doc.setFillColor(248, 250, 252);
         doc.rect(0, 0, 210, 40, 'F');
         doc.setFontSize(28);
-        doc.setTextColor(255, 255, 255);
+        doc.setTextColor(15, 23, 42);
         doc.setFont("helvetica", "bold");
         doc.text(`Work Activity Journal`, 20, 25);
         doc.setFontSize(10);
-        doc.setTextColor(150, 150, 150);
+        doc.setTextColor(100, 116, 139);
         doc.text(`REGULAR REPORT • DATE: ${date}`, 20, 32);
         let yPos = 55;
         logs.forEach((log) => {
@@ -112,7 +112,7 @@ const AdminDashboard = ({ setToken }) => {
             yPos += 15;
             doc.setFontSize(10);
             doc.setTextColor(100, 100, 100);
-            doc.text("CURRENT ACTIVITY", 20, yPos);
+            doc.text("TODAY'S TASK", 20, yPos);
             yPos += 6;
             doc.setFont("helvetica", "normal");
             doc.setTextColor(40, 40, 40);
@@ -121,7 +121,7 @@ const AdminDashboard = ({ setToken }) => {
             yPos += (todayLines.length * 6) + 4;
             doc.setFontSize(10);
             doc.setTextColor(100, 100, 100);
-            doc.text("STRATEGIC OBJECTIVES", 20, yPos);
+            doc.text("TOMORROW/NEXT WORKING DAY'S TASK", 20, yPos);
             yPos += 6;
             const planLines = doc.splitTextToSize(log.planForTomorrow || "", 170);
             doc.text(planLines, 25, yPos);
@@ -131,7 +131,7 @@ const AdminDashboard = ({ setToken }) => {
     };
 
     return (
-        <div className="flex h-screen bg-[#020617] text-slate-200 overflow-hidden w-full">
+        <div className="flex h-screen bg-slate-50 text-slate-800 overflow-hidden w-full">
             {/* Sidebar Toggle */}
             <button
                 onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -147,9 +147,9 @@ const AdminDashboard = ({ setToken }) => {
                         initial={{ x: -300, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
                         exit={{ x: -300, opacity: 0 }}
-                        className="fixed lg:static w-[320px] sm:w-[380px] h-full border-r border-white/5 bg-slate-950/80 lg:bg-slate-950/20 backdrop-blur-3xl flex flex-col z-50 shrink-0 shadow-2xl lg:shadow-none"
+                        className="fixed lg:static w-[320px] sm:w-[380px] h-full border-r border-slate-200 bg-white/90 lg:bg-white/40 backdrop-blur-3xl flex flex-col z-50 shrink-0 shadow-2xl lg:shadow-none"
                     >
-                        <div className="p-8 h-20 border-b border-white/5 flex items-center gap-4">
+                        <div className="p-8 h-20 border-b border-slate-200 flex items-center gap-4">
                             <div className="w-10 h-10 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-xl flex items-center justify-center text-white">
                                 <Shield className="w-6 h-6" />
                             </div>
@@ -168,7 +168,7 @@ const AdminDashboard = ({ setToken }) => {
                                         placeholder="Identification"
                                         value={newUser.username}
                                         onChange={(e) => setNewUser({ ...newUser, username: e.target.value })}
-                                        className="w-full px-5 py-4 bg-slate-900/50 border border-white/5 rounded-2xl focus:border-blue-500/50 outline-none transition-all text-sm"
+                                        className="w-full px-5 py-4 bg-white border border-slate-200 rounded-2xl focus:border-blue-500/50 outline-none transition-all text-sm"
                                         required
                                     />
                                     <input
@@ -176,14 +176,14 @@ const AdminDashboard = ({ setToken }) => {
                                         placeholder="Credentials"
                                         value={newUser.password}
                                         onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
-                                        className="w-full px-5 py-4 bg-slate-900/50 border border-white/5 rounded-2xl focus:border-blue-500/50 outline-none transition-all text-sm"
+                                        className="w-full px-5 py-4 bg-white border border-slate-200 rounded-2xl focus:border-blue-500/50 outline-none transition-all text-sm"
                                         required
                                     />
                                     <div className="flex gap-3">
                                         <select
                                             value={newUser.role}
                                             onChange={(e) => setNewUser({ ...newUser, role: e.target.value })}
-                                            className="flex-1 px-4 py-3 bg-slate-900 border border-white/5 rounded-2xl text-xs font-bold uppercase tracking-widest outline-none"
+                                            className="flex-1 px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-xs font-bold uppercase tracking-widest outline-none"
                                         >
                                             <option value="WORKER">Worker</option>
                                             <option value="ADMIN">Admin</option>
@@ -203,12 +203,12 @@ const AdminDashboard = ({ setToken }) => {
                                 </h2>
                                 <div className="space-y-2">
                                     {users.map(u => (
-                                        <div key={u.id} className="flex items-center justify-between p-3 bg-white/[0.02] border border-white/5 rounded-xl group hover:bg-white/[0.05] transition-all">
+                                        <div key={u.id} className="flex items-center justify-between p-3 bg-white border border-slate-100 rounded-xl group hover:shadow-sm transition-all">
                                             <div className="flex items-center gap-3">
-                                                <div className="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-[10px] font-black">{u.username[0].toUpperCase()}</div>
+                                                <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-[10px] font-black">{u.username[0].toUpperCase()}</div>
                                                 <div>
-                                                    <span className="text-xs font-bold text-slate-300 block">{u.username}</span>
-                                                    <span className={`text-[8px] font-black tracking-[0.2em] uppercase px-2 py-0.5 rounded-md ${u.role === 'ADMIN' ? 'bg-purple-500/20 text-purple-400' : 'bg-slate-500/20 text-slate-400'}`}>
+                                                    <span className="text-xs font-bold text-slate-700 block">{u.username}</span>
+                                                    <span className={`text-[8px] font-black tracking-[0.2em] uppercase px-2 py-0.5 rounded-md ${u.role === 'ADMIN' ? 'bg-purple-100 text-purple-600' : 'bg-slate-100 text-slate-500'}`}>
                                                         {u.role}
                                                     </span>
                                                 </div>
@@ -224,7 +224,7 @@ const AdminDashboard = ({ setToken }) => {
                             </section>
                         </div>
 
-                        <div className="p-8 border-t border-white/5">
+                        <div className="p-8 border-t border-slate-200">
                             <button onClick={handleLogout} className="w-full flex items-center justify-center gap-3 py-4 bg-red-500/10 hover:bg-red-500/20 text-red-500 rounded-2xl border border-red-500/20 transition-all font-bold uppercase tracking-widest text-xs">
                                 <LogOut className="w-4 h-4" /> Terminate Session
                             </button>
@@ -235,10 +235,10 @@ const AdminDashboard = ({ setToken }) => {
 
             {/* Main Full Page Activity Archive */}
             <main className="flex-1 h-screen flex flex-col relative overflow-hidden">
-                <header className="h-auto min-h-[5rem] lg:h-20 border-b border-white/5 bg-slate-950/10 backdrop-blur-xl px-6 lg:px-10 py-4 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 lg:gap-0 z-10">
+                <header className="h-auto min-h-[5rem] lg:h-20 border-b border-slate-200 bg-white/60 backdrop-blur-xl px-6 lg:px-10 py-4 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 lg:gap-0 z-10">
                     <div className="flex items-center gap-8">
                         <div>
-                            <h2 className="text-xl lg:text-2xl font-black text-white tracking-tighter">Activity Stream</h2>
+                            <h2 className="text-xl lg:text-2xl font-black text-slate-900 tracking-tighter">Activity Stream</h2>
                             <p className="text-[9px] lg:text-[10px] text-slate-500 uppercase tracking-[0.4em] font-black mt-1">Operational Monitoring</p>
                         </div>
                     </div>
@@ -250,8 +250,7 @@ const AdminDashboard = ({ setToken }) => {
                                 type="date"
                                 value={date}
                                 onChange={(e) => setDate(e.target.value)}
-                                className="w-full lg:w-48 pl-12 pr-6 py-2.5 bg-slate-900/80 border border-white/10 rounded-xl text-xs font-bold text-white outline-none focus:border-blue-500/50 transition-all cursor-pointer"
-                            />
+                                className="w-full lg:w-48 pl-12 pr-6 py-2.5 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-900 outline-none focus:border-blue-500/50 transition-all cursor-pointer" />
                         </div>
                         <button
                             onClick={downloadPDF}
@@ -263,12 +262,12 @@ const AdminDashboard = ({ setToken }) => {
                     </div>
                 </header>
 
-                <div className="flex-1 overflow-y-auto p-12 custom-scroll bg-gradient-to-b from-[#020617] to-slate-950">
+                <div className="flex-1 overflow-y-auto p-12 custom-scroll bg-slate-50">
                     {logs.length === 0 ? (
                         <div className="h-full flex flex-col items-center justify-center text-center opacity-40">
-                            <Search className="w-20 h-20 mb-6 text-slate-800" />
-                            <h3 className="text-2xl font-black text-white">Archives Vacant</h3>
-                            <p className="mt-2 font-medium">No activity markers detected for the selected period.</p>
+                            <Search className="w-20 h-20 mb-6 text-slate-200" />
+                            <h3 className="text-2xl font-black text-slate-900">Archives Vacant</h3>
+                            <p className="mt-2 font-medium text-slate-500">No activity markers detected for the selected period.</p>
                         </div>
                     ) : (
                         <div className="max-w-[1200px] mx-auto space-y-12">
@@ -282,23 +281,23 @@ const AdminDashboard = ({ setToken }) => {
                                 >
                                     {/* Timeline Marker */}
                                     <div className="col-span-1 hidden md:flex flex-col items-center pt-2">
-                                        <div className="w-12 h-12 rounded-2xl bg-slate-900 border border-white/5 flex items-center justify-center font-black group-hover:border-blue-500/40 transition-all text-blue-500">
+                                        <div className="w-12 h-12 rounded-2xl bg-white border border-slate-200 flex items-center justify-center font-black group-hover:border-blue-500/40 transition-all text-blue-500 shadow-sm">
                                             {idx + 1}
                                         </div>
-                                        <div className="w-px flex-1 bg-gradient-to-b from-slate-900 to-transparent my-4" />
+                                        <div className="w-px flex-1 bg-gradient-to-b from-slate-200 to-transparent my-4" />
                                     </div>
 
                                     {/* Content Card */}
-                                    <div className="col-span-12 md:col-span-11 p-6 md:p-10 bg-white/[0.02] border border-white/5 rounded-[2rem] md:rounded-[3rem] hover:bg-white/[0.03] hover:border-white/10 transition-all flex flex-col gap-6 md:gap-8 shadow-2xl">
+                                    <div className="col-span-12 md:col-span-11 p-6 md:p-10 bg-white border border-slate-200 rounded-[2rem] md:rounded-[3rem] hover:border-slate-300 transition-all flex flex-col gap-6 md:gap-8 shadow-sm">
                                         <div className="flex items-center justify-between gap-4">
                                             <div className="flex items-center gap-4 md:gap-6">
                                                 <div className="w-10 h-10 md:w-14 md:h-14 bg-blue-600 rounded-full flex items-center justify-center text-sm md:text-xl font-black text-white shadow-xl shadow-blue-500/20 shrink-0">
                                                     {log.User?.username?.[0]?.toUpperCase()}
                                                 </div>
                                                 <div className="min-w-0">
-                                                    <h3 className="text-lg md:text-2xl font-black text-white tracking-widest uppercase truncate">{log.User?.username}</h3>
+                                                    <h3 className="text-lg md:text-2xl font-black text-slate-900 tracking-widest uppercase truncate">{log.User?.username}</h3>
                                                     <div className="flex items-center gap-3 mt-1">
-                                                        <Clock className="w-3 h-3 text-slate-600" />
+                                                        <Clock className="w-3 h-3 text-slate-400" />
                                                         <span className="text-[10px] font-black text-slate-500 tracking-[0.2em]">{new Date(log.createdAt).toLocaleTimeString()}</span>
                                                     </div>
                                                 </div>
@@ -308,14 +307,14 @@ const AdminDashboard = ({ setToken }) => {
 
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                                             <div className="space-y-4">
-                                                <h4 className="text-[10px] font-black text-blue-500 uppercase tracking-[0.4em]">Operational Status</h4>
-                                                <div className="p-8 bg-slate-950 rounded-[2rem] border border-white/5 text-slate-300 leading-relaxed font-medium">
+                                                <h4 className="text-[10px] font-black text-blue-500 uppercase tracking-[0.4em]">Today's Task</h4>
+                                                <div className="p-8 bg-slate-50 rounded-[2rem] border border-slate-100 text-slate-700 leading-relaxed font-medium">
                                                     {log.description}
                                                 </div>
                                             </div>
                                             <div className="space-y-4">
-                                                <h4 className="text-[10px] font-black text-purple-500 uppercase tracking-[0.4em]">Future Objectives</h4>
-                                                <div className="p-8 bg-slate-950 rounded-[2rem] border border-white/5 text-slate-300 leading-relaxed font-medium">
+                                                <h4 className="text-[10px] font-black text-purple-500 uppercase tracking-[0.4em]">Tomorrow/ Next Working Day's Task</h4>
+                                                <div className="p-8 bg-slate-50 rounded-[2rem] border border-slate-100 text-slate-700 leading-relaxed font-medium">
                                                     {log.planForTomorrow}
                                                 </div>
                                             </div>

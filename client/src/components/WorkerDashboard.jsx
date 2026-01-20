@@ -88,15 +88,15 @@ const WorkerDashboard = ({ setToken }) => {
     };
 
     if (fetching) return (
-        <div className="min-h-screen bg-[#020617] flex items-center justify-center">
+        <div className="min-h-screen bg-white flex items-center justify-center">
             <div className="w-8 h-8 border-4 border-blue-600/20 border-t-blue-600 rounded-full animate-spin" />
         </div>
     );
 
     return (
-        <div className="min-h-screen bg-[#020617] text-slate-200 flex flex-col">
+        <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col">
             {/* Navbar */}
-            <nav className="border-b border-white/5 bg-slate-950/50 backdrop-blur-2xl sticky top-0 z-50">
+            <nav className="border-b border-slate-200 bg-white/80 backdrop-blur-2xl sticky top-0 z-50">
                 <div className="w-full px-4 lg:px-8 h-auto min-h-[5rem] py-4 lg:py-0 flex flex-col lg:flex-row items-center justify-between gap-4 lg:gap-0">
                     <div className="flex flex-col lg:flex-row items-center gap-4 lg:gap-6 w-full lg:w-auto">
                         <div className="flex items-center gap-4 self-start lg:self-auto">
@@ -104,22 +104,21 @@ const WorkerDashboard = ({ setToken }) => {
                                 <LayoutDashboard className="w-6 h-6 text-white" />
                             </div>
                             <div>
-                                <h2 className="font-extrabold text-white text-lg lg:text-xl tracking-tight leading-none">Workspace</h2>
+                                <h2 className="font-extrabold text-slate-900 text-lg lg:text-xl tracking-tight leading-none">Workspace</h2>
                                 <p className="text-[9px] text-slate-500 uppercase tracking-[0.2em] mt-1 font-bold">Identity: {user?.username}</p>
                             </div>
                         </div>
 
-                        {/* Tab Navigation */}
-                        <div className="flex items-center w-full lg:w-auto bg-white/5 p-1 rounded-2xl border border-white/5">
+                        <div className="flex items-center w-full lg:w-auto bg-slate-100 p-1 rounded-2xl border border-slate-200">
                             <button
                                 onClick={() => setActiveTab('submit')}
-                                className={`flex-1 lg:flex-none flex items-center justify-center gap-2 px-4 lg:px-6 py-2.5 rounded-xl transition-all font-bold text-[10px] lg:text-xs uppercase tracking-widest ${activeTab === 'submit' ? 'bg-blue-600 text-white shadow-lg' : 'text-slate-500 hover:text-slate-300'} ${exists && !isEditing ? 'opacity-60' : ''}`}
+                                className={`flex-1 lg:flex-none flex items-center justify-center gap-2 px-4 lg:px-6 py-2.5 rounded-xl transition-all font-bold text-[10px] lg:text-xs uppercase tracking-widest ${activeTab === 'submit' ? 'bg-blue-600 text-white shadow-lg' : 'text-slate-500 hover:text-slate-700'} ${exists && !isEditing ? 'opacity-60' : ''}`}
                             >
                                 <ClipboardList className="w-3.5 h-3.5 lg:w-4 lg:h-4" /> {exists && !isEditing ? 'Sent' : (isEditing ? 'Editing' : 'Submit')}
                             </button>
                             <button
                                 onClick={() => setActiveTab('history')}
-                                className={`flex-1 lg:flex-none flex items-center justify-center gap-2 px-4 lg:px-6 py-2.5 rounded-xl transition-all font-bold text-[10px] lg:text-xs uppercase tracking-widest ${activeTab === 'history' ? 'bg-blue-600 text-white shadow-lg' : 'text-slate-500 hover:text-slate-300'}`}
+                                className={`flex-1 lg:flex-none flex items-center justify-center gap-2 px-4 lg:px-6 py-2.5 rounded-xl transition-all font-bold text-[10px] lg:text-xs uppercase tracking-widest ${activeTab === 'history' ? 'bg-blue-600 text-white shadow-lg' : 'text-slate-500 hover:text-slate-700'}`}
                             >
                                 <History className="w-3.5 h-3.5 lg:w-4 lg:h-4" /> Response
                             </button>
@@ -146,10 +145,10 @@ const WorkerDashboard = ({ setToken }) => {
                             >
                                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10 lg:mb-12">
                                     <div>
-                                        <h1 className="text-3xl lg:text-4xl font-black text-white tracking-tight italic">
+                                        <h1 className="text-3xl lg:text-4xl font-black text-slate-900 tracking-tight italic">
                                             {exists && !isEditing ? 'Session Secured' : (isEditing ? 'Modify Entry' : 'New Submission')}
                                         </h1>
-                                        <p className="text-slate-400 mt-2 font-medium text-sm lg:text-base">Recording operations for the current session cycle</p>
+                                        <p className="text-slate-600 mt-2 font-medium text-sm lg:text-base">Recording operations for the current session cycle</p>
                                     </div>
                                     <div className="self-start lg:self-auto px-5 py-2.5 lg:px-6 lg:py-3 bg-blue-600/10 border border-blue-500/30 rounded-2xl flex items-center gap-3">
                                         <Calendar className="w-4 h-4 lg:w-5 lg:h-5 text-blue-400" />
@@ -162,13 +161,13 @@ const WorkerDashboard = ({ setToken }) => {
                                         <div className="w-20 h-20 bg-emerald-500/10 border border-emerald-500/20 rounded-[2rem] flex items-center justify-center mb-8 shadow-2xl shadow-emerald-500/10">
                                             <CheckCircle2 className="w-10 h-10 text-emerald-500" />
                                         </div>
-                                        <h2 className="text-3xl font-black text-white tracking-tight mb-3">Today's Submission Completed</h2>
-                                        <p className="text-slate-500 max-w-sm mx-auto font-medium leading-relaxed italic">
+                                        <h2 className="text-3xl font-black text-slate-900 tracking-tight mb-3">Today's Submission Completed</h2>
+                                        <p className="text-slate-600 max-w-sm mx-auto font-medium leading-relaxed italic">
                                             "You have already submitted your response for today. The entry is now formally synchronized and locked."
                                         </p>
                                         <button
                                             onClick={() => setActiveTab('history')}
-                                            className="mt-12 px-10 py-4 bg-white/5 hover:bg-white/10 text-white rounded-2xl border border-white/10 transition-all font-black text-xs uppercase tracking-widest flex items-center gap-3 group"
+                                            className="mt-12 px-10 py-4 bg-slate-100 hover:bg-slate-200 text-slate-900 rounded-2xl border border-slate-200 transition-all font-black text-xs uppercase tracking-widest flex items-center gap-3 group"
                                         >
                                             View Response History <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                         </button>
@@ -179,13 +178,13 @@ const WorkerDashboard = ({ setToken }) => {
                                             <div className="space-y-4">
                                                 <div className="flex items-center gap-2 mb-2">
                                                     <div className="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.5)]" />
-                                                    <label className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-500">Achievements</label>
+                                                    <label className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-500">Today's Task</label>
                                                 </div>
                                                 <textarea
                                                     value={description}
                                                     onChange={(e) => setDescription(e.target.value)}
-                                                    className="w-full h-40 lg:h-48 p-6 lg:p-8 bg-slate-950/50 border border-white/5 rounded-[1.5rem] lg:rounded-[2rem] focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500/50 outline-none transition-all resize-none text-slate-200 placeholder-slate-700 leading-relaxed text-base lg:text-lg"
-                                                    placeholder="Detail your primary accomplishments..."
+                                                    className="w-full h-40 lg:h-48 p-6 lg:p-8 bg-white border border-slate-200 rounded-[1.5rem] lg:rounded-[2rem] focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500/50 outline-none transition-all resize-none text-slate-800 placeholder-slate-400 leading-relaxed text-base lg:text-lg"
+                                                    placeholder="Detail today's objectives and progress..."
                                                     required
                                                 />
                                             </div>
@@ -193,13 +192,13 @@ const WorkerDashboard = ({ setToken }) => {
                                             <div className="space-y-4">
                                                 <div className="flex items-center gap-2 mb-2">
                                                     <div className="w-2 h-2 rounded-full bg-purple-500 shadow-[0_0_10px_rgba(168,85,247,0.5)]" />
-                                                    <label className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-500">Strategic Next Steps</label>
+                                                    <label className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-500">Tomorrow/ Next Working Day's Task</label>
                                                 </div>
                                                 <textarea
                                                     value={planForTomorrow}
                                                     onChange={(e) => setPlanForTomorrow(e.target.value)}
-                                                    className="w-full h-48 p-8 bg-slate-950/50 border border-white/5 rounded-[2rem] focus:ring-4 focus:ring-purple-500/10 focus:border-purple-500/50 outline-none transition-all resize-none text-slate-200 placeholder-slate-700 leading-relaxed text-lg"
-                                                    placeholder="Outline your planned initiatives..."
+                                                    className="w-full h-48 p-8 bg-white border border-slate-200 rounded-[2rem] focus:ring-4 focus:ring-purple-500/10 focus:border-purple-500/50 outline-none transition-all resize-none text-slate-800 placeholder-slate-400 leading-relaxed text-lg"
+                                                    placeholder="Outline tasks for the next session cycle..."
                                                     required
                                                 />
                                             </div>
@@ -224,7 +223,7 @@ const WorkerDashboard = ({ setToken }) => {
                                                 <button
                                                     type="button"
                                                     onClick={() => setIsEditing(false)}
-                                                    className="flex-1 py-6 bg-slate-900 text-slate-400 font-black text-lg rounded-[2rem] border border-white/5 hover:bg-slate-800 transition-all active:scale-[0.98]"
+                                                    className="flex-1 py-6 bg-slate-200 text-slate-600 font-black text-lg rounded-[2rem] border border-slate-300 hover:bg-slate-300 transition-all active:scale-[0.98]"
                                                 >
                                                     Discard
                                                 </button>
@@ -256,22 +255,22 @@ const WorkerDashboard = ({ setToken }) => {
                             >
                                 <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-4 px-4">
                                     <div>
-                                        <h1 className="text-4xl font-black text-white tracking-tight italic">Response Archive</h1>
-                                        <p className="text-slate-500 mt-2 font-medium">Tracking your operational trajectory across all session cycles</p>
+                                        <h1 className="text-4xl font-black text-slate-900 tracking-tight italic">Response Archive</h1>
+                                        <p className="text-slate-600 mt-2 font-medium">Tracking your operational trajectory across all session cycles</p>
                                     </div>
-                                    <div className="bg-white/5 border border-white/10 px-6 py-3 rounded-2xl flex items-center gap-3">
+                                    <div className="bg-white border border-slate-200 px-6 py-3 rounded-2xl flex items-center gap-3">
                                         <History className="w-5 h-5 text-slate-400" />
-                                        <span className="text-sm font-black text-white uppercase tracking-widest">{historyLogs.length} Records</span>
+                                        <span className="text-sm font-black text-slate-700 uppercase tracking-widest">{historyLogs.length} Records</span>
                                     </div>
                                 </div>
 
                                 {historyLogs.length === 0 ? (
                                     <div className="glass-card rounded-[3rem] p-24 text-center">
-                                        <div className="w-20 h-20 bg-slate-900 rounded-[2rem] border border-white/5 flex items-center justify-center mx-auto mb-6">
-                                            <Search className="w-10 h-10 text-slate-700" />
+                                        <div className="w-20 h-20 bg-slate-100 rounded-[2rem] border border-slate-200 flex items-center justify-center mx-auto mb-6">
+                                            <Search className="w-10 h-10 text-slate-400" />
                                         </div>
-                                        <h3 className="text-2xl font-black text-white tracking-tight">Archive Vacant</h3>
-                                        <p className="text-slate-500 mt-2 font-medium italic">No historical data markers detected for this identity.</p>
+                                        <h3 className="text-2xl font-black text-slate-900 tracking-tight">Archive Vacant</h3>
+                                        <p className="text-slate-600 mt-2 font-medium italic">No historical data markers detected for this identity.</p>
                                     </div>
                                 ) : (
                                     <div className="grid grid-cols-1 gap-8">
@@ -281,18 +280,18 @@ const WorkerDashboard = ({ setToken }) => {
                                                 initial={{ opacity: 0, y: 20 }}
                                                 animate={{ opacity: 1, y: 0 }}
                                                 transition={{ delay: idx * 0.05 }}
-                                                className="glass-card rounded-[2.5rem] p-10 hover:border-white/10 transition-all border border-white/5 group relative overflow-hidden"
+                                                className="glass-card rounded-[2.5rem] p-10 hover:border-slate-300 transition-all border border-slate-200 group relative overflow-hidden"
                                             >
                                                 <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600/5 blur-3xl pointer-events-none" />
 
-                                                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10 border-b border-white/5 pb-8">
+                                                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10 border-b border-slate-200 pb-8">
                                                     <div className="flex items-center gap-5">
-                                                        <div className="w-14 h-14 bg-slate-900 border border-white/5 rounded-2xl flex flex-col items-center justify-center text-blue-500 font-black leading-none">
+                                                        <div className="w-14 h-14 bg-slate-100 border border-slate-200 rounded-2xl flex flex-col items-center justify-center text-blue-500 font-black leading-none">
                                                             <span className="text-[10px] uppercase tracking-tighter mb-1 opacity-50">Log</span>
                                                             <span className="text-xl">{historyLogs.length - idx}</span>
                                                         </div>
                                                         <div>
-                                                            <h3 className="text-2xl font-black text-white tracking-tighter">{new Date(log.date).toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' })}</h3>
+                                                            <h3 className="text-2xl font-black text-slate-900 tracking-tighter">{new Date(log.date).toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' })}</h3>
                                                             <div className="flex items-center gap-2 mt-1">
                                                                 <Clock className="w-3.5 h-3.5 text-slate-600" />
                                                                 <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">TS: {new Date(log.createdAt).toLocaleTimeString()}</span>
@@ -316,18 +315,18 @@ const WorkerDashboard = ({ setToken }) => {
                                                     <div className="space-y-4">
                                                         <div className="flex items-center gap-2">
                                                             <MessageSquare className="w-3.5 h-3.5 text-blue-500" />
-                                                            <h4 className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">Operational Status</h4>
+                                                            <h4 className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">Today's Task</h4>
                                                         </div>
-                                                        <div className="p-8 bg-slate-950/80 rounded-[2rem] border border-white/5 text-slate-300 leading-relaxed font-medium italic">
+                                                        <div className="p-8 bg-slate-50/50 rounded-[2rem] border border-slate-100 text-slate-700 leading-relaxed font-medium italic">
                                                             "{log.description}"
                                                         </div>
                                                     </div>
                                                     <div className="space-y-4">
                                                         <div className="flex items-center gap-2">
                                                             <ArrowRight className="w-3.5 h-3.5 text-purple-500" />
-                                                            <h4 className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">Forward Trajectory</h4>
+                                                            <h4 className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">Tomorrow/ Next Working Day's Task</h4>
                                                         </div>
-                                                        <div className="p-8 bg-slate-950/80 rounded-[2rem] border border-white/5 text-slate-300 leading-relaxed font-medium italic">
+                                                        <div className="p-8 bg-slate-50/50 rounded-[2rem] border border-slate-100 text-slate-700 leading-relaxed font-medium italic">
                                                             "{log.planForTomorrow}"
                                                         </div>
                                                     </div>
