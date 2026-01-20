@@ -2,6 +2,9 @@
     "name": "track-ai-monorepo",
     "version": "1.0.0",
     "private": true,
+    "scripts": {
+        "build": "cd client && npm install && npm run build && cd .. && rm -rf dist && mv client/dist ./dist"
+    },
     "dependencies": {
         "bcryptjs": "^3.0.3",
         "cors": "^2.8.5",
