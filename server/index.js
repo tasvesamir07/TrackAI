@@ -161,8 +161,20 @@ app.delete('/api/work-logs/:id', authenticateToken, async (req, res) => {
     }
 });
 
-sequelize.sync().then(() => {
-    app.listen(PORT, () => {
-        console.log(`Server running on port ${PORT}`);
-    });
-});
+const startServer = async () => {
+    try {
+        await sequelize.sync();
+        console.log('Database synced');
+        if (process.env.NODE_ENV !== 'production') {
+            app.listen(PORT, () => {
+                console.log(`Server running on port ${PORT}`);
+            });
+        }
+    } catch (err) {
+        console.error('Failed to sync database:', err);
+    }
+};
+
+startServer();
+
+module.exports = app;

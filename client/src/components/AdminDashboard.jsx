@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { jsPDF } from 'jspdf';
 
 const AdminDashboard = ({ setToken }) => {
-    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+    const API_URL = import.meta.env.VITE_API_URL || '';
     const [users, setUsers] = useState([]);
     const [logs, setLogs] = useState([]);
     const [date, setDate] = useState(new Date().toISOString().split('T')[0]);

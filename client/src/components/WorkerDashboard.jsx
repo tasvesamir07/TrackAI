@@ -5,7 +5,7 @@ import { Calendar, Send, LogOut, CheckCircle2, LayoutDashboard, Clock, ArrowRigh
 import { motion, AnimatePresence } from 'framer-motion';
 
 const WorkerDashboard = ({ setToken }) => {
-    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+    const API_URL = import.meta.env.VITE_API_URL || '';
     const [activeTab, setActiveTab] = useState('submit'); // 'submit' or 'history'
     const todayDate = new Date().toISOString().split('T')[0];
     const [description, setDescription] = useState('');
