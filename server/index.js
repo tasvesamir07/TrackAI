@@ -23,6 +23,7 @@ const sequelize = process.env.DATABASE_URL
     ? new Sequelize(process.env.DATABASE_URL, {
         dialect: 'postgres',
         protocol: 'postgres',
+        dialectModule: require('pg'),
         dialectOptions: {
             ssl: {
                 require: true,
@@ -32,7 +33,8 @@ const sequelize = process.env.DATABASE_URL
     })
     : new Sequelize({
         dialect: 'sqlite',
-        storage: '/tmp/database.sqlite'
+        storage: '/tmp/database.sqlite',
+        dialectModule: require('sqlite3')
     });
 
 const User = sequelize.define('User', {
