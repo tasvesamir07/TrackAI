@@ -5,7 +5,7 @@ const dotenv = require('dotenv');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-// Force Vercel to bundle PostgreSQL driver
+// Mandatory for Vercel: Force bundling of PostgreSQL driver
 try {
     require('pg');
     require('pg-hstore');
@@ -23,7 +23,7 @@ const sequelize = process.env.DATABASE_URL
     ? new Sequelize(process.env.DATABASE_URL, {
         dialect: 'postgres',
         protocol: 'postgres',
-        dialectModule: require('pg'),
+        dialectModule: require('pg'), // Critical fix for Vercel
         dialectOptions: {
             ssl: {
                 require: true,
@@ -114,9 +114,7 @@ app.post('/api/work-logs', authenticateToken, async (req, res) => {
     try {
         const today = new Date().toISOString().split('T')[0];
         const { description, planForTomorrow } = req.body;
-        console.log(`Submitting log for user ${req.user.id} on ${today}`);
 
-        // Explicit find and update/create
         let log = await WorkLog.findOne({
             where: { UserId: req.user.id, date: today }
         });
@@ -136,7 +134,6 @@ app.post('/api/work-logs', authenticateToken, async (req, res) => {
             return res.status(201).json(log);
         }
     } catch (error) {
-        console.error("Submission Error:", error.message);
         res.status(400).json({ error: error.message });
     }
 });
@@ -173,11 +170,6 @@ const startServer = async () => {
     try {
         await sequelize.sync();
         console.log('Database synced');
-        if (process.env.NODE_ENV !== 'production') {
-            app.listen(PORT, () => {
-                console.log(`Server running on port ${PORT}`);
-            });
-        }
     } catch (err) {
         console.error('Failed to sync database:', err);
     }

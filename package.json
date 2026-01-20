@@ -2,6 +2,12 @@
     "name": "track-ai-monorepo",
     "version": "1.0.0",
     "private": true,
+    "scripts": {
+        "start": "node api/index.js",
+        "build": "npm run build --prefix client",
+        "install-client": "npm install --prefix client",
+        "postinstall": "npm run install-client"
+    },
     "dependencies": {
         "bcryptjs": "^3.0.3",
         "cors": "^2.8.5",
