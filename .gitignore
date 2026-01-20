@@ -1,0 +1,33 @@
+# Dependencies
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# IDE
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Environment
+.env
+.env.local
+.env.production
+.env.development
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Databases
+*.sqlite
+database.sqlite
+
+# Legacy folders (cleanup)
+client/
+server/
+api/node_modules/
