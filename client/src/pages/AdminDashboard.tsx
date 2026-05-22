@@ -17,7 +17,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '@/lib/api';
 import { format } from 'date-fns';
 import { toZonedTime } from 'date-fns-tz';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { useDebouncedValue } from '@/hooks/useDebouncedValue';
 import { 
@@ -351,6 +351,7 @@ export default function AdminDashboard() {
     const { logout, user } = useAuth();
     const { socket } = useSocket();
     const navigate = useNavigate();
+    const routerLocation = useLocation();
     const queryClient = useQueryClient();
     const normalizedViewerRole = String(user?.role || '').trim().toLowerCase();
     const isSuperAdminViewer = normalizedViewerRole === 'super_admin' || normalizedViewerRole === 'superadmin';
@@ -428,9 +429,9 @@ export default function AdminDashboard() {
     };
 
     const getRoleBadgeClass = (role?: User['role'] | string) => {
-        if (role === 'admin') return "bg-purple-100 text-purple-700";
-        if (role === 'moderator') return "bg-amber-100 text-amber-700";
-        return "bg-blue-100 text-blue-700";
+        if (role === 'admin') return "bg-purple-500/10 text-purple-650 dark:text-purple-400 border border-purple-500/20 px-2 py-0.5 rounded-full text-xs font-semibold";
+        if (role === 'moderator') return "bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 px-2 py-0.5 rounded-full text-xs font-semibold";
+        return "bg-violet-500/10 text-violet-650 dark:text-violet-400 border border-violet-500/20 px-2 py-0.5 rounded-full text-xs font-semibold";
     };
 
 
@@ -3788,7 +3789,7 @@ export default function AdminDashboard() {
                                             className={cn(
                                                 "h-9 w-9 p-0 rounded-xl transition-colors",
                                                 canOpenUserDetails
-                                                    ? "text-muted-foreground hover:text-blue-500 hover:bg-blue-50"
+                                                    ? "text-muted-foreground hover:text-violet-600 dark:hover:text-violet-400 hover:bg-violet-500/10"
                                                     : "text-muted-foreground/50 cursor-not-allowed"
                                             )}
                                         >
@@ -3980,7 +3981,7 @@ export default function AdminDashboard() {
                                                                     {row.allSessions?.map((s: any, idx: number) => {
                                                                         const b = s.breaks?.[0];
                                                                         return b?.end ? (
-                                                                            <span key={idx} className="inline-flex rounded-full bg-blue-50 border border-blue-100 px-3 py-1 text-[13px] font-medium text-blue-700">
+                                                                            <span key={idx} className="inline-flex rounded-full bg-indigo-500/10 border border-indigo-500/20 px-3 py-1 text-[13px] font-medium text-indigo-650 dark:text-indigo-400">
                                                                                 {formatActivityTime(b.end)}
                                                                             </span>
                                                                         ) : <span key={idx} className="text-muted-foreground/50 font-medium">-</span>
@@ -3991,7 +3992,7 @@ export default function AdminDashboard() {
                                                                 <div className="flex flex-col gap-1.5 items-center">
                                                                     {row.allSessions?.map((s: any, idx: number) => (
                                                                         s.sign_out_time ? (
-                                                                            <span key={idx} className="inline-flex rounded-full bg-rose-50 border border-rose-100 px-3 py-1 text-[13px] font-medium text-rose-700">
+                                                                            <span key={idx} className="inline-flex rounded-full bg-rose-500/10 border border-rose-500/20 px-3 py-1 text-[13px] font-medium text-rose-650 dark:text-rose-455">
                                                                                 {formatActivityTime(s.sign_out_time)}
                                                                             </span>
                                                                         ) : <span key={idx} className="text-muted-foreground/50 font-medium">-</span>
@@ -4033,7 +4034,7 @@ export default function AdminDashboard() {
                                     <Card key={u.id} className="border-0 shadow-lg bg-card rounded-3xl overflow-hidden hover:shadow-xl transition group">
                                         <div className="p-6">
                                             <div className="flex items-center gap-4 mb-6">
-                                                <div className="w-16 h-16 rounded-2xl bg-linear-to-br from-purple-500 to-blue-500 flex items-center justify-center text-white text-xl font-bold shadow-lg shrink-0">
+                                                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-600 to-indigo-600 flex items-center justify-center text-white text-xl font-bold shadow-lg shadow-violet-500/10 shrink-0">
                                                     {u.profile_picture ? (
                                                         <OptimizedImage 
                                                             src={getAssetUrl(u.profile_picture)} 
@@ -4144,13 +4145,13 @@ export default function AdminDashboard() {
                             <div className="flex items-center justify-between">
                                 <div>
                                     <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
-                                        <CalendarDays className="w-5 h-5 text-blue-500" />
+                                        <CalendarDays className="w-5 h-5 text-violet-550 dark:text-violet-400" />
                                         Leave Management
                                     </CardTitle>
                                     <CardDescription>Review and handle all team leave requests</CardDescription>
                                 </div>
                                 <div className="flex items-center gap-2">
-                                    <div className="h-2 w-2 rounded-full bg-blue-500 animate-pulse" />
+                                    <div className="h-2 w-2 rounded-full bg-violet-600 dark:bg-violet-400 animate-pulse" />
                                     <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
                                         {sortedAdminLeaves.length} Total Requests
                                     </span>
@@ -4206,17 +4207,17 @@ export default function AdminDashboard() {
                                                      </td>
                                                      <td className="px-6 py-4 text-center">
                                                          <div className="flex flex-col items-center gap-1">
-                                                             <span className={cn(
-                                                                 "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider shadow-sm",
-                                                                 leave.moderator_status === 'pending' ? "bg-amber-100 text-amber-700" : 
-                                                                 leave.moderator_status === 'proceeded' ? "bg-blue-100 text-blue-700" : 
-                                                                 "bg-red-100 text-red-700"
-                                                             )}>
-                                                                 <div className={cn("h-1.5 w-1.5 rounded-full", 
-                                                                     leave.moderator_status === 'pending' ? "bg-amber-500 animate-pulse" : 
-                                                                     leave.moderator_status === 'proceeded' ? "bg-blue-500" : 
-                                                                     "bg-red-500"
-                                                                 )} />
+                                                              <span className={cn(
+                                                                  "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider shadow-sm",
+                                                                  leave.moderator_status === 'pending' ? "bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20" : 
+                                                                  leave.moderator_status === 'proceeded' ? "bg-indigo-500/10 text-indigo-650 dark:text-indigo-400 border border-indigo-500/20" : 
+                                                                  "bg-red-500/10 text-red-650 dark:text-red-400 border border-red-500/20"
+                                                              )}>
+                                                                  <div className={cn("h-1.5 w-1.5 rounded-full", 
+                                                                      leave.moderator_status === 'pending' ? "bg-amber-500 animate-pulse" : 
+                                                                      leave.moderator_status === 'proceeded' ? "bg-indigo-500" : 
+                                                                      "bg-red-500"
+                                                                  )} />
                                                                  {leave.moderator_status || 'pending'}
                                                              </span>
                                                              {leave.moderated_by_name && (
@@ -4316,7 +4317,7 @@ export default function AdminDashboard() {
                                                                          setSelectedLeaveForView(leave);
                                                                          setShowLeaveDetails(true);
                                                                      }}
-                                                                     className="h-8 w-8 text-muted-foreground/70 hover:text-blue-500"
+                                                                     className="h-8 w-8 text-muted-foreground/70 hover:text-violet-600 dark:hover:text-violet-400 hover:bg-violet-500/10 rounded-lg"
                                                                      title="View Details"
                                                                  >
                                                                      <Eye className="w-4 h-4" />
@@ -4459,7 +4460,7 @@ export default function AdminDashboard() {
                                     </div>
                                 </div>
 
-                                <div className="space-y-3 rounded-2xl border border-blue-100 bg-blue-50/60 p-4">
+                                <div className="space-y-3 rounded-2xl border border-violet-500/20 bg-violet-500/5 backdrop-blur-md p-4">
                                     <div className="flex items-start justify-between gap-3">
                                         <div className="space-y-1">
                                             <Label htmlFor="dev-tools-enabled" className="text-xs font-bold text-foreground uppercase tracking-wider">
@@ -4472,13 +4473,13 @@ export default function AdminDashboard() {
                                             type="checkbox"
                                             checked={devToolsEnabled}
                                             onChange={(e) => setDevToolsEnabled(e.target.checked)}
-                                            className="mt-0.5 h-4 w-4 rounded border-input text-blue-600 focus:ring-blue-500"
+                                            className="mt-0.5 h-4 w-4 rounded border-input text-violet-650 focus:ring-violet-500"
                                         />
                                     </div>
                                     <Button
                                         onClick={() => saveDevToolsSettingsMutation.mutate({ enabled: devToolsEnabled })}
                                         disabled={saveDevToolsSettingsMutation.isPending}
-                                        className="h-9 rounded-xl bg-blue-600 px-4 text-white hover:bg-blue-700 w-full sm:w-auto"
+                                        className="h-9 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 shadow-md shadow-violet-500/10 hover:shadow-lg transition duration-200 text-white px-4 w-full sm:w-auto"
                                     >
                                         {saveDevToolsSettingsMutation.isPending ? 'Saving...' : 'Save Developer Tools Setting'}
                                     </Button>
@@ -4541,7 +4542,7 @@ export default function AdminDashboard() {
                         <Card className="lg:col-span-6 xl:col-span-4 border border-border/50 shadow-sm bg-card rounded-2xl overflow-hidden">
                             <CardHeader className="border-b border-border/50">
                                 <CardTitle className="text-lg flex items-center gap-2">
-                                    <CalendarDays className="w-5 h-5 text-blue-500" />
+                                    <CalendarDays className="w-5 h-5 text-violet-550 dark:text-violet-400" />
                                     Holiday Calendar
                                 </CardTitle>
                                 <CardDescription>Register public holidays and company breaks</CardDescription>
@@ -5039,7 +5040,7 @@ export default function AdminDashboard() {
                                         </CardContent>
                                     </Card>
 
-                                    {/* Admin Communication Hub ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â spans 1 col on the right in a 3-col grid */}
+                                    {/* Admin Communication Hub ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â  spans 1 col on the right in a 3-col grid */}
                                     <Card className="lg:col-span-12 border border-border/50 shadow-sm bg-card rounded-2xl overflow-hidden">
                                         <CardHeader className="border-b border-border/50">
                                             <div className="flex items-center justify-between">
@@ -5134,10 +5135,10 @@ export default function AdminDashboard() {
                                                             className="w-28 h-10 rounded-xl border-border text-center font-bold bg-card shadow-sm"
                                                         />
                                                     </div>
-                                                    <div className="flex items-center justify-between p-3 rounded-xl border border-blue-100 bg-blue-50/20">
+                                                    <div className="flex items-center justify-between p-3 rounded-xl border border-violet-500/20 bg-violet-500/5 backdrop-blur-md">
                                                         <div>
                                                             <Label className="text-sm font-bold text-foreground flex items-center gap-1.5">
-                                                                <FileText className="w-4 h-4 text-blue-500" />
+                                                                <FileText className="w-4 h-4 text-violet-550 dark:text-violet-400" />
                                                                 PDF Reporting
                                                             </Label>
                                                             <p className="text-xs text-muted-foreground">Attach automated PDF to email</p>
@@ -5147,7 +5148,7 @@ export default function AdminDashboard() {
                                                             id="notifEmailEnabled"
                                                             checked={notifEmailEnabled}
                                                             onChange={(e) => setNotifEmailEnabled(e.target.checked)}
-                                                            className="w-5 h-5 rounded-lg border-input text-blue-600 focus:ring-blue-500 transition cursor-pointer"
+                                                            className="w-5 h-5 rounded-lg border-input text-violet-650 focus:ring-violet-500 transition cursor-pointer"
                                                         />
                                                     </div>
                                                 </div>
@@ -5296,8 +5297,8 @@ export default function AdminDashboard() {
                                                     {/* Telegram */}
                                                     <div className="space-y-2 bg-muted/50 p-3 rounded-xl border border-border/50">
                                                         <div className="flex items-center gap-2">
-                                                            <div className="w-7 h-7 rounded-lg bg-blue-100 flex items-center justify-center">
-                                                                <Send className="w-3.5 h-3.5 text-blue-600" />
+                                                            <div className="w-7 h-7 rounded-lg bg-sky-500/10 dark:bg-sky-500/5 border border-sky-500/20 flex items-center justify-center">
+                                                                <Send className="w-3.5 h-3.5 text-sky-500 dark:text-sky-400" />
                                                             </div>
                                                             <h4 className="font-bold text-foreground text-sm">Telegram</h4>
                                                         </div>
@@ -5323,7 +5324,7 @@ export default function AdminDashboard() {
                                                                     }
                                                                 }}
                                                                 size="icon"
-                                                                className="h-9 w-9 rounded-xl bg-blue-500 hover:bg-blue-600 px-0 shrink-0"
+                                                                className="h-9 w-9 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white shadow-md shadow-violet-500/10 hover:shadow-lg transition duration-200 px-0 shrink-0"
                                                             >
                                                                 <Plus className="w-4 h-4" />
                                                             </Button>
@@ -5372,7 +5373,7 @@ export default function AdminDashboard() {
                                                         });
                                                     }}
                                                     disabled={saveNotificationSettingsMutation.isPending}
-                                                    className="w-full h-12 rounded-xl bg-linear-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold shadow-lg shadow-purple-200 transition active:scale-[0.98]"
+                                                    className="w-full h-12 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white font-bold shadow-lg shadow-violet-500/10 hover:shadow-violet-500/25 transition active:scale-[0.98]"
                                                 >
                                                     {saveNotificationSettingsMutation.isPending ? (
                                                         <div className="flex items-center gap-2">
@@ -5438,7 +5439,7 @@ export default function AdminDashboard() {
                                                             resetAllPaidLeaveBalancesMutation.mutate();
                                                         }
                                                     }}
-                                                    className="h-auto py-4 flex-col gap-2 rounded-2xl border-blue-100 hover:bg-blue-50 text-blue-700"
+                                                    className="h-auto py-4 flex-col gap-2 rounded-2xl border border-violet-500/20 hover:bg-violet-500/10 text-violet-750 dark:text-violet-400"
                                                 >
                                                     <Sparkles className="w-5 h-5" />
                                                     <div className="text-center">
@@ -5573,7 +5574,7 @@ export default function AdminDashboard() {
                                 variant="outline"
                                 onClick={() => managedUser && handleClearUserLeaveHistory(managedUser)}
                                 disabled={!managedUser || clearUserLeaveHistoryMutation.isPending}
-                                className="justify-start rounded-xl border-rose-200 text-rose-700 hover:bg-rose-50 hover:text-rose-800"
+                                className="justify-start rounded-xl border border-rose-500/20 text-rose-700 dark:text-rose-400 hover:bg-rose-500/10 dark:hover:bg-rose-500/20"
                             >
                                 <Trash2 className="mr-2 h-4 w-4" />
                                 Clear Leave History
@@ -5583,7 +5584,7 @@ export default function AdminDashboard() {
                                 variant="outline"
                                 onClick={() => managedUser && handleClearUserSkippedDays(managedUser)}
                                 disabled={!managedUser || clearUserSkippedDaysMutation.isPending}
-                                className="justify-start rounded-xl border-blue-200 text-blue-700 hover:bg-blue-50 hover:text-blue-800"
+                                className="justify-start rounded-xl border border-violet-500/20 text-violet-750 dark:text-violet-400 hover:bg-violet-500/10 dark:hover:bg-violet-500/20"
                             >
                                 <AlertCircle className="mr-2 h-4 w-4" />
                                 Clear Skipped Days
@@ -6045,7 +6046,7 @@ export default function AdminDashboard() {
                         ) : (
                         <div className="flex flex-col">
                             {/* Header Section with Profile Banner style */}
-                            <div className="h-32 bg-linear-to-r from-purple-600 to-blue-600 relative">
+                            <div className="h-32 bg-gradient-to-r from-violet-600 to-indigo-600 relative">
                                 <DialogClose className="absolute top-4 right-4 h-10 w-10 rounded-full bg-black/20 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-black/40 hover:scale-110 transition duration-300 group z-10">
                                     <X className="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" />
                                 </DialogClose>
@@ -6139,23 +6140,23 @@ export default function AdminDashboard() {
                                                             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 relative">
                                                                 <div className="space-y-1">
                                                                     <p className="text-[10px] font-bold text-muted-foreground uppercase">Bank Name</p>
-                                                                    <p className="text-sm font-bold text-white/90">{bank.bank_name || 'ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â'}</p>
+                                                                    <p className="text-sm font-bold text-white/90">{bank.bank_name || '—'}</p>
                                                                 </div>
                                                                 <div className="space-y-1">
                                                                     <p className="text-[10px] font-bold text-muted-foreground uppercase">Account Holder</p>
-                                                                    <p className="text-sm font-bold text-white/90 truncate">{bank.account_holder_name || 'ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â'}</p>
+                                                                    <p className="text-sm font-bold text-white/90 truncate">{bank.account_holder_name || '—'}</p>
                                                                 </div>
                                                                 <div className="space-y-1">
                                                                     <p className="text-[10px] font-bold text-muted-foreground uppercase">Account Number</p>
-                                                                    <p className="text-sm font-mono font-bold text-white/90 tracking-wider">{bank.account_number || 'ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â'}</p>
+                                                                    <p className="text-sm font-mono font-bold text-white/90 tracking-wider">{bank.account_number || '—'}</p>
                                                                 </div>
                                                                 <div className="space-y-1">
                                                                     <p className="text-[10px] font-bold text-muted-foreground uppercase">Branch Name</p>
-                                                                    <p className="text-sm font-bold text-white/90">{bank.branch_name || 'ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â'}</p>
+                                                                    <p className="text-sm font-bold text-white/90">{bank.branch_name || '—'}</p>
                                                                 </div>
                                                                 <div className="space-y-1">
                                                                     <p className="text-[10px] font-bold text-muted-foreground uppercase">Routing Number</p>
-                                                                    <p className="text-sm font-mono font-bold text-white/90">{bank.routing_number || 'ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â'}</p>
+                                                                    <p className="text-sm font-mono font-bold text-white/90">{bank.routing_number || '—'}</p>
                                                                 </div>
                                                             </div>
                                                         );
@@ -6173,7 +6174,7 @@ export default function AdminDashboard() {
                                     
                                     <div className="md:col-span-2 pt-4 border-t border-border/50 flex items-center justify-between text-[10px] font-medium text-muted-foreground/70 uppercase tracking-widest">
                                         <span>User ID: {selectedUserDetails.id}</span>
-                                        <span>Joined: {selectedUserDetails.created_at ? format(new Date(selectedUserDetails.created_at), 'MMMM do, yyyy') : 'ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â'}</span>
+                                        <span>Joined: {selectedUserDetails.created_at ? format(new Date(selectedUserDetails.created_at), 'MMMM do, yyyy') : '—'}</span>
                                     </div>
                                 </div>
                             </div>
@@ -6364,7 +6365,7 @@ export default function AdminDashboard() {
                 <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-card shadow-2xl border-border">
                     <DialogHeader>
                         <DialogTitle className="flex items-center gap-2">
-                            <Plane className="w-5 h-5 text-blue-500" />
+                            <Plane className="w-5 h-5 text-violet-550 dark:text-violet-400" />
                             Leave Request Details
                         </DialogTitle>
                         <DialogDescription>
@@ -6409,11 +6410,11 @@ export default function AdminDashboard() {
                                     </span>
                                     <span className={cn(
                                         "inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase",
-                                        selectedLeaveForView.status === 'pending' ? "bg-amber-100 text-amber-700" : 
-                                        selectedLeaveForView.status === 'approved' ? "bg-blue-100 text-blue-700" : 
-                                        selectedLeaveForView.status === 'working' ? "bg-rose-100 text-rose-700" :
-                                        selectedLeaveForView.status === 'covered' ? "bg-emerald-100 text-emerald-700" :
-                                        "bg-red-100 text-red-700"
+                                        selectedLeaveForView.status === 'pending' ? "bg-amber-500/10 text-amber-650 dark:text-amber-400 border border-amber-500/20" : 
+                                        selectedLeaveForView.status === 'approved' ? "bg-indigo-500/10 text-indigo-650 dark:text-indigo-400 border border-indigo-500/20" : 
+                                        selectedLeaveForView.status === 'working' ? "bg-rose-500/10 text-rose-650 dark:text-rose-450 border border-rose-500/20" :
+                                        selectedLeaveForView.status === 'covered' ? "bg-emerald-500/10 text-emerald-650 dark:text-emerald-450 border border-emerald-500/20" :
+                                        "bg-red-500/10 text-red-650 dark:text-red-400 border border-red-500/20"
                                     )}>
                                         {selectedLeaveForView.status}
                                     </span>
@@ -6446,11 +6447,11 @@ export default function AdminDashboard() {
                                                         {format(new Date(ind.leave_date), 'EEEE, MMM dd, yyyy')}
                                                         <span className={cn(
                                                             "text-[9px] px-1.5 py-0.5 rounded uppercase font-bold border",
-                                                            ind.status === 'covered' ? "bg-emerald-50 text-emerald-600 border-emerald-100" :
-                                                            ind.status === 'approved' ? "bg-blue-50 text-blue-600 border-blue-100" :
-                                                            ind.status === 'working' ? "bg-rose-50 text-rose-600 border-rose-100 animate-pulse" :
-                                                            ind.status === 'pending' ? "bg-amber-50 text-amber-600 border-amber-100" :
-                                                            "bg-red-50 text-red-600 border-red-100"
+                                                            ind.status === 'covered' ? "bg-emerald-500/10 text-emerald-650 dark:text-emerald-450 border border-emerald-500/20" :
+                                                            ind.status === 'approved' ? "bg-indigo-500/10 text-indigo-650 dark:text-indigo-400 border border-indigo-500/20" :
+                                                            ind.status === 'working' ? "bg-rose-500/10 text-rose-650 dark:text-rose-455 border border-rose-500/20 animate-pulse" :
+                                                            ind.status === 'pending' ? "bg-amber-500/10 text-amber-650 dark:text-amber-400 border border-amber-500/20" :
+                                                            "bg-red-500/10 text-red-650 dark:text-red-400 border border-red-500/20"
                                                         )}>
                                                             {ind.status}
                                                         </span>
