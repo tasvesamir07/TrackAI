@@ -1,0 +1,47 @@
+{
+  "common": {
+    "dashboard": "ড্যাশবোর্ড",
+    "settings": "সেটিংস",
+    "profile": "প্রোফাইল",
+    "logout": "লগ আউট",
+    "save": "সংরক্ষণ",
+    "cancel": "বাতিল",
+    "search": "অনুসন্ধান",
+    "loading": "লোড হচ্ছে..."
+  },
+  "nav": {
+    "home": "হোম",
+    "employees": "কর্মী",
+    "projects": "প্রজেক্ট",
+    "tasks": "কাজ",
+    "leaves": "ছুটি",
+    "reports": "রিপোর্ট",
+    "attendance": "উপস্থিতি"
+  },
+  "auth": {
+    "login": "লগ ইন",
+    "signup": "সাইন আপ",
+    "forgotPassword": "পাসওয়ার্ড ভুলে গেছি",
+    "welcome": "স্বাগতম"
+  },
+  "employees": {
+    "addEmployee": "কর্মী যোগ করুন",
+    "employeeList": "কর্মী তালিকা",
+    "name": "নাম",
+    "email": "ইমেইল",
+    "role": "ভূমিকা",
+    "department": "বিভাগ"
+  },
+  "projects": {
+    "addProject": "প্রজেক্ট যোগ করুন",
+    "projectName": "প্রজেক্টের নাম",
+    "status": "অবস্থা",
+    "progress": "অগ্রগতি"
+  },
+  "attendance": {
+    "checkIn": "চেক ইন",
+    "checkOut": "চেক আউট",
+    "present": "উপস্থিত",
+    "absent": "অনুপস্থিত"
+  }
+}

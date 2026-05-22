@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="margin:0;padding:0;background:#f4f7f6;font-family:Segoe UI,Arial,sans-serif;color:#111827;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f4f7f6;padding:20px;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="620" cellpadding="0" cellspacing="0" style="max-width:620px;width:100%;background:#ffffff;border-radius:16px;overflow:hidden;border:1px solid #e2e8f0;">
+          <!-- Header -->
+          <tr>
+            <td style="padding:24px 28px;background:linear-gradient(120deg,#4f46e5,#06b6d4);color:#ffffff;">
+              <h2 style="margin:0;font-size:24px;line-height:1.2;">🌴 New Leave Request</h2>
+              <span style="display:inline-block;padding:4px 12px;border-radius:9999px;font-size:12px;font-weight:600;text-transform:uppercase;margin-top:8px;background:{{#if (eq leaveType 'paid')}}#dcfce7{{else}}#fee2e2{{/if}};color:{{#if (eq leaveType 'paid')}}#166534{{else}}#991b1b{{/if}};">
+                {{leaveType}} Leave
+              </span>
+            </td>
+          </tr>
+          <!-- Content -->
+          <tr>
+            <td style="padding:22px 28px;">
+              <table style="width:100%;" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="padding:8px 0;color:#64748b;font-size:13px;font-weight:600;text-transform:uppercase;width:100px;">Employee</td>
+                  <td style="padding:8px 0;color:#1e293b;font-size:15px;font-weight:500;">
+                    {{username}}{{#if department}} ({{department}}){{/if}}
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding:8px 0;color:#64748b;font-size:13px;font-weight:600;text-transform:uppercase;">Dates</td>
+                  <td style="padding:8px 0;color:#1e293b;font-size:15px;font-weight:500;">{{dateRangeStr}}</td>
+                </tr>
+                <tr>
+                  <td style="padding:8px 0;color:#64748b;font-size:13px;font-weight:600;text-transform:uppercase;">Duration</td>
+                  <td style="padding:8px 0;color:#1e293b;font-size:15px;font-weight:500;">{{duration}} {{#if (gt duration 1)}}Days{{else}}Day{{/if}}</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:0 28px 22px;">
+              <p style="margin:0 0 8px;color:#64748b;font-size:13px;font-weight:600;text-transform:uppercase;">Reason</p>
+              <div style="background:#f8fafc;padding:20px;border-radius:12px;border:1px solid #f1f5f9;color:#334155;font-size:14px;font-style:italic;">
+                "{{reason}}"
+              </div>
+            </td>
+          </tr>
+          <!-- Footer -->
+          <tr>
+            <td style="padding:20px 28px;background:#f9fafb;border-top:1px solid #e5e7eb;text-align:center;">
+              <p style="margin:0;font-size:12px;color:#94a3b8;">© {{year}} Daily Task System • Automated Notification</p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

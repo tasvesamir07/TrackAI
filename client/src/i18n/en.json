@@ -1,0 +1,72 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "search": "Search",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "confirm": "Confirm",
+    "back": "Back",
+    "next": "Next",
+    "submit": "Submit"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "projects": "Projects",
+    "tasks": "Tasks",
+    "employees": "Employees",
+    "attendance": "Attendance",
+    "leaves": "Leaves",
+    "reports": "Reports",
+    "settings": "Settings",
+    "profile": "Profile",
+    "logout": "Logout"
+  },
+  "dashboard": {
+    "welcome": "Welcome",
+    "overview": "Overview",
+    "recentActivity": "Recent Activity",
+    "pendingTasks": "Pending Tasks",
+    "teamMembers": "Team Members"
+  },
+  "employees": {
+    "addEmployee": "Add Employee",
+    "employeeList": "Employee List",
+    "name": "Name",
+    "email": "Email",
+    "role": "Role",
+    "department": "Department",
+    "status": "Status"
+  },
+  "attendance": {
+    "checkIn": "Check In",
+    "checkOut": "Check Out",
+    "todayAttendance": "Today's Attendance",
+    "history": "Attendance History"
+  },
+  "leaves": {
+    "applyLeave": "Apply for Leave",
+    "leaveType": "Leave Type",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "reason": "Reason",
+    "status": "Status"
+  },
+  "projects": {
+    "createProject": "Create Project",
+    "projectName": "Project Name",
+    "description": "Description",
+    "startDate": "Start Date",
+    "dueDate": "Due Date"
+  },
+  "settings": {
+    "company": "Company",
+    "notifications": "Notifications",
+    "billing": "Billing",
+    "security": "Security"
+  }
+}

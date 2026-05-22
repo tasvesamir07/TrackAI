@@ -1,0 +1,72 @@
+{
+  "common": {
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "create": "Crear",
+    "search": "Buscar",
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "confirm": "Confirmar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "submit": "Enviar"
+  },
+  "nav": {
+    "dashboard": "Panel",
+    "projects": "Proyectos",
+    "tasks": "Tareas",
+    "employees": "Empleados",
+    "attendance": "Asistencia",
+    "leaves": "Permisos",
+    "reports": "Informes",
+    "settings": "Configuración",
+    "profile": "Perfil",
+    "logout": "Cerrar sesión"
+  },
+  "dashboard": {
+    "welcome": "Bienvenido",
+    "overview": "Resumen",
+    "recentActivity": "Actividad reciente",
+    "pendingTasks": "Tareas pendientes",
+    "teamMembers": "Miembros del equipo"
+  },
+  "employees": {
+    "addEmployee": "Agregar empleado",
+    "employeeList": "Lista de empleados",
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "role": "Rol",
+    "department": "Departamento",
+    "status": "Estado"
+  },
+  "attendance": {
+    "checkIn": "Entrada",
+    "checkOut": "Salida",
+    "todayAttendance": "Asistencia de hoy",
+    "history": "Historial de asistencia"
+  },
+  "leaves": {
+    "applyLeave": "Solicitar permiso",
+    "leaveType": "Tipo de permiso",
+    "startDate": "Fecha de inicio",
+    "endDate": "Fecha de fin",
+    "reason": "Motivo",
+    "status": "Estado"
+  },
+  "projects": {
+    "createProject": "Crear proyecto",
+    "projectName": "Nombre del proyecto",
+    "description": "Descripción",
+    "startDate": "Fecha de inicio",
+    "dueDate": "Fecha límite"
+  },
+  "settings": {
+    "company": "Empresa",
+    "notifications": "Notificaciones",
+    "billing": "Facturación",
+    "security": "Seguridad"
+  }
+}

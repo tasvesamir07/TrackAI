@@ -1,0 +1,445 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiJ-Ek-_EeA.woff2') format('woff2');
+}
+
+@layer base {
+  :root {
+    /* Primary Brand - Violet */
+    --primary: 262 83% 58%;
+    --primary-hover: 262 82% 48%;
+    --primary-light: 262 90% 96%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Background & Surface - Warm neutral */
+    --background: 210 20% 98%;
+    --foreground: 215 25% 15%;
+    --card: 0 0% 100%;
+    --card-foreground: 215 25% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 25% 15%;
+
+    /* Secondary - Sophisticated slate */
+    --secondary: 215 16% 47%;
+    --secondary-foreground: 215 25% 15%;
+    --secondary-light: 215 16% 96%;
+
+    /* Muted */
+    --muted: 215 16% 94%;
+    --muted-foreground: 215 15% 35%;
+
+    /* Accent */
+    --accent: 215 16% 92%;
+    --accent-foreground: 215 25% 15%;
+
+    /* Semantic Colors */
+    --success: 145 60% 38%;
+    --success-light: 145 60% 94%;
+    --warning: 35 92% 50%;
+    --warning-light: 35 92% 94%;
+    --error: 0 75% 50%;
+    --error-light: 0 75% 95%;
+    --info: 210 75% 50%;
+    --info-light: 210 75% 95%;
+
+    /* Borders */
+    --border: 215 14% 80%;
+    --input: 215 14% 80%;
+    --ring: 262 83% 58%;
+
+    /* Radius */
+    --radius-sm: 6px;
+    --radius: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+
+    /* Charts */
+    --chart-1: 262 83% 58%;
+    --chart-2: 150 65% 45%;
+    --chart-3: 38 92% 50%;
+    --chart-4: 340 75% 55%;
+    --chart-5: 190 70% 40%;
+  }
+
+  .dark {
+    /* Dark mode - keeping it muted and sophisticated */
+    --background: 215 28% 8%;
+    --foreground: 210 20% 92%;
+    --card: 215 28% 10%;
+    --card-foreground: 210 20% 92%;
+    --popover: 215 28% 10%;
+    --popover-foreground: 210 20% 92%;
+
+    --primary: 262 90% 65%;
+    --primary-hover: 262 83% 75%;
+    --primary-light: 262 60% 20%;
+    --primary-foreground: 215 28% 8%;
+
+    --secondary: 215 16% 30%;
+    --secondary-foreground: 210 20% 92%;
+    --secondary-light: 215 16% 15%;
+
+    --muted: 215 20% 15%;
+    --muted-foreground: 215 15% 65%;
+
+    --accent: 215 20% 15%;
+    --accent-foreground: 210 20% 92%;
+
+    --success: 145 60% 50%;
+    --success-light: 145 60% 12%;
+    --warning: 35 92% 50%;
+    --warning-light: 35 60% 12%;
+    --error: 0 75% 55%;
+    --error-light: 0 60% 12%;
+    --info: 210 75% 55%;
+    --info-light: 210 60% 12%;
+
+    --border: 215 20% 20%;
+    --input: 215 20% 20%;
+    --ring: 262 90% 65%;
+  }
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  html, body, #root {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Smooth text rendering */
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+  }
+
+  button,
+  a,
+  [role="button"],
+  input[type="button"],
+  input[type="submit"] {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* Professional Shadow System */
+@layer utilities {
+  /* Subtle elevation */
+  .shadow-sm {
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  }
+
+  /* Default elevation */
+  .shadow {
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  }
+
+  /* Card elevation */
+  .shadow-md {
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  }
+
+  /* Elevated surfaces */
+  .shadow-lg {
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  }
+
+  /* Modals & dropdowns */
+  .shadow-xl {
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  }
+
+  /* Focus glow */
+  .shadow-glow {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.25);
+  }
+
+  .shadow-glow-success {
+    box-shadow: 0 0 20px hsl(var(--success) / 0.25);
+  }
+
+  .shadow-glow-error {
+    box-shadow: 0 0 20px hsl(var(--error) / 0.25);
+  }
+
+  /* Card with gradient top */
+  .card-gradient-top {
+    background: linear-gradient(180deg, hsl(var(--muted) / 0.3) 0%, hsl(var(--card)) 100%);
+  }
+
+  /* Interactive hover lift */
+  .hover-lift {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 40px -10px rgb(0 0 0 / 0.15);
+  }
+
+  /* Press effect */
+  .press:active {
+    transform: scale(0.98);
+  }
+}
+
+/* Phone Input Styling */
+.PhoneInput {
+  display: flex;
+  align-items: center;
+}
+
+.PhoneInputInput {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.PhoneInputInput:focus {
+  outline: none;
+}
+
+.PhoneInputCountry {
+  display: flex;
+  align-items: center;
+  margin-right: 0.5rem;
+  padding-right: 0.5rem;
+  border-right: 1px solid hsl(var(--border));
+}
+
+.PhoneInputCountryIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-right: 0.5rem;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+}
+
+.PhoneInputCountrySelect {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.875rem;
+  padding: 0;
+  margin: 0;
+  outline: none;
+}
+
+.PhoneInputCountrySelect:focus {
+  outline: none;
+}
+
+.PhoneInputCountrySelectArrow {
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-left: 0.25rem;
+  opacity: 0.5;
+}
+
+/* React Phone Input 2 Styling */
+.phone-input-wrapper {
+  width: 100%;
+}
+
+.phone-input-container {
+  width: 100%;
+}
+
+.phone-input-field {
+  width: 100% !important;
+  height: 2.75rem !important;
+  border-radius: var(--radius) !important;
+  border: 1px solid hsl(var(--border)) !important;
+  background-color: hsl(var(--background)) !important;
+  padding-left: 3.5rem !important;
+  font-size: 0.875rem !important;
+  line-height: 1.25rem !important;
+  transition: opacity 0.2s, transform 0.2s !important;
+}
+
+.phone-input-field:focus {
+  outline: none !important;
+  border-color: hsl(var(--ring)) !important;
+  box-shadow: 0 0 0 2px hsl(var(--ring) / 0.2) !important;
+}
+
+.phone-input-field-invalid {
+  border-color: hsl(var(--error)) !important;
+}
+
+.phone-input-button {
+  background-color: transparent !important;
+  border: none !important;
+  border-right: 1px solid hsl(var(--border)) !important;
+  padding: 0 0.75rem !important;
+  height: 2.75rem !important;
+  border-radius: var(--radius) 0 0 var(--radius) !important;
+}
+
+.phone-input-button:hover {
+  background-color: hsl(var(--accent)) !important;
+}
+
+/* Enhanced Phone Input Dropdown */
+.phone-input-dropdown {
+  background-color: hsl(var(--popover)) !important;
+  border: 1px solid hsl(var(--border)) !important;
+  border-radius: var(--radius-xl) !important;
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1) !important;
+  padding: 0.5rem !important;
+  margin-top: 0.5rem !important;
+  overflow: hidden !important;
+  overflow-y: auto !important;
+}
+
+/* Custom Scrollbar */
+.custom-scrollbar {
+  scrollbar-width: auto;
+  scrollbar-color: hsl(var(--muted-foreground) / 0.45) transparent;
+  scrollbar-gutter: stable;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--muted-foreground) / 0.35);
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: hsl(var(--muted-foreground) / 0.55);
+}
+
+.phone-input-dropdown .country {
+  padding: 0.6rem 0.75rem !important;
+  transition: opacity 0.15s ease, transform 0.15s ease !important;
+  border-radius: var(--radius-sm) !important;
+  margin-bottom: 2px !important;
+  color: hsl(var(--foreground)) !important;
+  font-size: 0.875rem !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+}
+
+.phone-input-dropdown .country .dial-code {
+  color: hsl(var(--muted-foreground)) !important;
+  font-weight: 500 !important;
+}
+
+.phone-input-dropdown .country:hover,
+.phone-input-dropdown .country.highlight {
+  background-color: hsl(var(--accent)) !important;
+  color: hsl(var(--accent-foreground)) !important;
+}
+
+/* Enhanced Search Input */
+.phone-input-search {
+  background-color: hsl(var(--background)) !important;
+  border: 1px solid hsl(var(--border)) !important;
+  border-radius: var(--radius-sm) !important;
+  padding: 0.6rem 0.75rem !important;
+  margin: 0.5rem !important;
+  width: calc(100% - 1rem) !important;
+  font-family: inherit !important;
+  font-size: 0.875rem !important;
+  color: hsl(var(--foreground)) !important;
+  outline: none !important;
+  transition: opacity 0.2s, transform 0.2s !important;
+}
+
+.phone-input-search:focus {
+  border-color: hsl(var(--ring)) !important;
+  box-shadow: 0 0 0 2px hsl(var(--ring) / 0.2) !important;
+}
+
+.phone-input-invalid .phone-input-field {
+  border-color: hsl(var(--error)) !important;
+  box-shadow: 0 0 0 1px hsl(var(--error)) !important;
+}
+
+/* Success Checkmark Animation */
+.success-checkmark {
+  width: 20px;
+  height: 20px;
+}
+
+.check-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: block;
+  stroke-width: 4;
+  stroke: #fff;
+  stroke-miterlimit: 10;
+  box-shadow: inset 0px 0px 0px hsl(var(--success));
+  animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+}
+
+.check-circle {
+  stroke-dasharray: 166;
+  stroke-dashoffset: 166;
+  stroke-width: 2;
+  stroke-miterlimit: 10;
+  stroke: hsl(var(--success));
+  fill: none;
+  animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.check-tick {
+  transform-origin: 50% 50%;
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+}
+
+@keyframes stroke {
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes scale {
+  0%, 100% {
+    transform: none;
+  }
+  50% {
+    transform: scale3d(1.1, 1.1, 1);
+  }
+}
+
+@keyframes fill {
+  100% {
+    box-shadow: inset 0px 0px 0px 30px hsl(var(--success));
+  }
+}

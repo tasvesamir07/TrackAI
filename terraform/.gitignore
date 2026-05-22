@@ -1,0 +1,36 @@
+# terraform/.gitignore
+
+# Local Terraform files
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfplan
+
+# Crash logs
+crash.log
+crash.*.log
+
+# Exclude all .tfvars files except example
+*.tfvars
+!terraform.tfvars.example
+
+# Override files
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Include tfplan files in gitignore if using remote state
+# But DO commit examples!
+# !examples/
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db

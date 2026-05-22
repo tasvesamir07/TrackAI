@@ -1,0 +1,47 @@
+{
+  "common": {
+    "dashboard": "仪表板",
+    "settings": "设置",
+    "profile": "个人资料",
+    "logout": "退出登录",
+    "save": "保存",
+    "cancel": "取消",
+    "search": "搜索",
+    "loading": "加载中..."
+  },
+  "nav": {
+    "home": "首页",
+    "employees": "员工",
+    "projects": "项目",
+    "tasks": "任务",
+    "leaves": "请假",
+    "reports": "报告",
+    "attendance": "考勤"
+  },
+  "auth": {
+    "login": "登录",
+    "signup": "注册",
+    "forgotPassword": "忘记密码",
+    "welcome": "欢迎"
+  },
+  "employees": {
+    "addEmployee": "添加员工",
+    "employeeList": "员工列表",
+    "name": "姓名",
+    "email": "邮箱",
+    "role": "角色",
+    "department": "部门"
+  },
+  "projects": {
+    "addProject": "添加项目",
+    "projectName": "项目名称",
+    "status": "状态",
+    "progress": "进度"
+  },
+  "attendance": {
+    "checkIn": "签到",
+    "checkOut": "签退",
+    "present": "出勤",
+    "absent": "缺勤"
+  }
+}

@@ -1,0 +1,539 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  SUPERADMIN
+  COMPANY_ADMIN
+  PROJECT_MANAGER
+  EMPLOYEE
+}
+
+model Plan {
+  id                   String    @id @default(uuid())
+  code                 String    @unique
+  name                 String
+  monthly_price        Decimal   @db.Decimal(10, 2)
+  currency             String    @default("USD")
+  trial_days           Int       @default(0)
+  max_company_admins   Int       @default(0)
+  max_project_managers Int       @default(0)
+  max_employees        Int       @default(0)
+  stripe_price_id      String?   @unique
+  is_active            Boolean   @default(true)
+  created_at           DateTime  @default(now()) @db.Timestamptz
+  updated_at           DateTime  @default(now()) @db.Timestamptz
+  tenants              Tenant[]
+}
+
+model Tenant {
+  id                      String        @id @default(uuid())
+  name                    String
+  slug                    String        @unique
+  plan_id                 String
+  plan                    Plan          @relation(fields: [plan_id], references: [id])
+  stripe_customer_id      String?       @unique
+  stripe_subscription_id String?       @unique
+  subscription_status     String        @default("trialing")
+  trial_ends_at           DateTime?     @db.Timestamptz
+  current_period_ends_at  DateTime?     @db.Timestamptz
+  last_payment_at         DateTime?     @db.Timestamptz
+  unlimited_access       Boolean       @default(false)
+  is_active               Boolean       @default(true)
+  created_at              DateTime      @default(now()) @db.Timestamptz
+  updated_at              DateTime      @default(now()) @db.Timestamptz
+  users                   User[]
+  settings                Setting[]
+  departments             Department[]
+  categories              Category[]
+  chat_groups             ChatGroup[]
+}
+
+model User {
+  id                     Int          @id @default(autoincrement())
+  full_name              String?
+  username               String
+  email                  String?
+  password_hash          String?
+  role                   UserRole     @default(EMPLOYEE)
+  status                 String       @default("inactive")
+  department             String?
+  contact_number         String?
+  bank_details           String?
+  minutes_balance        Int          @default(0)
+  paid_leave_balance     Int          @default(0)
+  profile_picture        String?
+  telegram_chat_id       String?
+  tg_link_token          String?
+  tg_link_expiry         DateTime?
+  company_id             String?
+  company                Tenant?      @relation(fields: [company_id], references: [id], onDelete: Cascade)
+  is_active              Boolean      @default(true)
+  created_at             DateTime     @default(now()) @db.Timestamptz
+  updated_at             DateTime     @default(now()) @db.Timestamptz
+  last_heartbeat         DateTime?
+  last_overtime_alert    DateTime?
+  last_goal_reached_alert DateTime?
+  timezone               String?      @db.VarChar(100)
+  last_latitude          Float?
+  last_longitude         Float?
+  last_location_update   DateTime?
+  
+  // Two-Factor Authentication
+  two_factor_enabled     Boolean      @default(false)
+  two_factor_secret      String?       @db.VarChar(255)
+  backup_codes           Json?
+  two_factor_pending     String?
+  two_factor_pending_expires DateTime?
+
+  tasks                  Task[]
+  activity_logs          ActivityLog[]
+  early_leaves           EarlyLeave[]
+  scheduled_actions      ScheduledAction[]
+  leaves                 Leave[]
+  created_projects       Project[]          @relation("ProjectCreator")
+  project_tasks_created   ProjectTask[]     @relation("TaskCreator")
+  project_tasks_assigned_by ProjectTask[]    @relation("TaskAssigner")
+  project_members        ProjectMember[]
+  project_tasks           TaskAssignee[]
+  task_assignment_alerts TaskAssignmentAlert[]
+  task_comments           TaskComment[]
+  task_activity_logs      TaskActivityLog[]
+  chat_groups_created    ChatGroup[]
+  chat_group_members     ChatGroupMember[]
+  messages               Message[]
+  push_subscriptions     PushSubscription[]
+  password_resets        PasswordReset[]
+  profile_update_requests ProfileUpdateRequest[]
+
+  @@unique([username])
+  @@unique([company_id, email])
+  @@index([company_id])
+  @@index([company_id, role, is_active])
+}
+
+model Setting {
+  id         String  @id @default(uuid())
+  key        String
+  value      String
+  company_id String?
+  company    Tenant? @relation(fields: [company_id], references: [id], onDelete: Cascade)
+
+  @@unique([company_id, key])
+  @@unique([key])
+}
+
+model Task {
+  id            Int        @id @default(autoincrement())
+  user_id       Int
+  user          User       @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  date          Date       @db.Date
+  todays_task   String?
+  attachments   Json       @default("[]")
+  covered_date  Date?      @db.Date
+  created_at    DateTime   @default(now())
+  updated_at    DateTime   @default(now())
+
+  @@unique([user_id, date])
+  @@index([user_id, date])
+}
+
+model ActivityLog {
+  id             Int       @id @default(autoincrement())
+  user_id        Int
+  user           User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  activity_type  String
+  timestamp      DateTime  @default(now())
+  covered_date   Date?     @db.Date
+  balance_change Int       @default(0)
+  created_at     DateTime  @default(now())
+
+  @@index([user_id, timestamp])
+  @@index([user_id, covered_date])
+  @@index([activity_type])
+}
+
+model EarlyLeave {
+  id          Int       @id @default(autoincrement())
+  user_id     Int?
+  user        User?     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  reason      String
+  hours_worked Float
+  created_at  DateTime  @default(now())
+
+  @@index([user_id, created_at])
+}
+
+model ScheduledAction {
+  id           Int       @id @default(autoincrement())
+  user_id      Int
+  user         User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  scheduled_at DateTime
+  task_content String?
+  content      String?
+  attachments  Json      @default("[]")
+  action_type  String    @default("task_submission")
+  status       String    @default("pending")
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @default(now())
+
+  @@index([user_id, status, scheduled_at])
+}
+
+model Leave {
+  id              Int        @id @default(autoincrement())
+  user_id         Int
+  user            User       @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  leave_date      Date       @db.Date
+  reason          String
+  status          String     @default("pending")
+  covered_by_date Date?      @db.Date
+  is_paid         Boolean    @default(false)
+  request_id      String
+  leave_type      String     @default("unpaid")
+  handled_by      Int?
+  handled_at      DateTime?
+  handled_by_name String?
+  created_at      DateTime   @default(now())
+
+  @@unique([user_id, leave_date])
+  @@index([user_id, leave_date])
+  @@index([request_id])
+  @@index([status])
+}
+
+model Department {
+  id         Int       @id @default(autoincrement())
+  name       String
+  company_id String?
+  company    Tenant?   @relation(fields: [company_id], references: [id], onDelete: Cascade)
+  created_at DateTime  @default(now())
+
+  @@unique([company_id, name])
+  @@unique([name])
+}
+
+model Category {
+  id         Int       @id @default(autoincrement())
+  name       String
+  company_id String?
+  company    Tenant?   @relation(fields: [company_id], references: [id], onDelete: Cascade)
+  created_at DateTime  @default(now())
+
+  @@unique([company_id, name])
+  @@unique([name])
+  user_categories UserCategory[]
+}
+
+model UserCategory {
+  user_id     Int
+  category_id Int
+  user        User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  category    Category @relation(fields: [category_id], references: [id], onDelete: Cascade)
+
+  @@id([user_id, category_id])
+}
+
+model Project {
+  id          Int           @id @default(autoincrement())
+  name        String
+  description String?
+  status      String        @default("active")
+  created_by  Int?
+  creator     User?         @relation("ProjectCreator", fields: [created_by], references: [id], onDelete: SetNull)
+  created_at  DateTime      @default(now())
+  updated_at  DateTime      @default(now())
+  deleted_at  DateTime?
+  members     ProjectMember[]
+  tasks       ProjectTask[]
+  activity_logs TaskActivityLog[]
+
+  @@index([deleted_at])
+  @@index([created_by])
+}
+
+model ProjectMember {
+  project_id Int
+  user_id    Int
+  project    Project @relation(fields: [project_id], references: [id], onDelete: Cascade)
+  user       User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  role       String  @default("member")
+  created_at DateTime @default(now())
+
+  @@id([project_id, user_id])
+  @@index([user_id])
+}
+
+model ProjectTask {
+  id            Int       @id @default(autoincrement())
+  project_id    Int
+  project       Project   @relation(fields: [project_id], references: [id], onDelete: Cascade)
+  title         String
+  description   String?
+  status        String    @default("todo")
+  priority      String    @default("medium")
+  due_date      DateTime?
+  position      Float     @default(0)
+  created_by    Int?
+  creator       User?     @relation("TaskCreator", fields: [created_by], references: [id], onDelete: SetNull)
+  assigned_by   Int?
+  assigner      User?     @relation("TaskAssigner", fields: [assigned_by], references: [id], onDelete: SetNull)
+  assigned_at   DateTime?
+  attachments   Json      @default("[]")
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @default(now())
+  assignees     TaskAssignee[]
+  alerts        TaskAssignmentAlert[]
+  comments      TaskComment[]
+  activity_logs TaskActivityLog[]
+
+  @@index([project_id])
+  @@index([project_id, position, created_at])
+  @@index([assigned_by])
+}
+
+model TaskAssignee {
+  task_id Int
+  user_id Int
+  task    ProjectTask @relation(fields: [task_id], references: [id], onDelete: Cascade)
+  user    User        @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@id([task_id, user_id])
+}
+
+model TaskAssignmentAlert {
+  task_id      Int
+  user_id      Int
+  assigned_by  Int?
+  assigner     User?       @relation(fields: [assigned_by], references: [id], onDelete: SetNull)
+  created_at   DateTime    @default(now())
+  dismissed_at DateTime?
+  task         ProjectTask @relation(fields: [task_id], references: [id], onDelete: Cascade)
+  user         User        @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@id([task_id, user_id])
+  @@index([user_id])
+}
+
+model TaskComment {
+  id          Int          @id @default(autoincrement())
+  task_id     Int
+  user_id     Int?
+  user        User?        @relation(fields: [user_id], references: [id], onDelete: SetNull)
+  content     String?
+  attachments Json         @default("[]")
+  created_at  DateTime     @default(now())
+  task        ProjectTask  @relation(fields: [task_id], references: [id], onDelete: Cascade)
+
+  @@index([task_id, created_at])
+}
+
+model TaskActivityLog {
+  id          Int       @id @default(autoincrement())
+  task_id     Int?
+  project_id  Int?
+  actor_user_id Int?
+  task        ProjectTask? @relation(fields: [task_id], references: [id], onDelete: SetNull)
+  project     Project?  @relation(fields: [project_id], references: [id], onDelete: SetNull)
+  actor       User?     @relation(fields: [actor_user_id], references: [id], onDelete: SetNull)
+  action_type String
+  details     Json      @default("{}")
+  created_at  DateTime  @default(now())
+
+  @@index([task_id, created_at])
+  @@index([project_id, created_at])
+}
+
+model ChatGroup {
+  id         Int       @id @default(autoincrement())
+  name       String
+  company_id String?
+  company    Tenant?   @relation(fields: [company_id], references: [id], onDelete: Cascade)
+  created_by  Int?
+  creator    User?     @relation(fields: [created_by], references: [id], onDelete: SetNull)
+  created_at DateTime  @default(now())
+  members    ChatGroupMember[]
+
+  @@index([company_id])
+}
+
+model ChatGroupMember {
+  group_id  Int
+  user_id    Int
+  group      ChatGroup @relation(fields: [group_id], references: [id], onDelete: Cascade)
+  user       User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  joined_at  DateTime  @default(now())
+
+  @@id([group_id, user_id])
+  @@index([user_id])
+}
+
+model Message {
+  id            Int       @id @default(autoincrement())
+  user_id       Int
+  user          User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  recipient_id  Int?
+  group_id      Int?
+  content       String?
+  attachment_url String?
+  attachment_type String?
+  attachments   Json      @default("[]")
+  reply_to_id   Int?
+  deleted_for   Int[]     @default([])
+  reactions     Json      @default("{}")
+  is_pinned     Boolean   @default(false)
+  is_edited     Boolean   @default(false)
+  is_forwarded  Boolean   @default(false)
+  status        String    @default("sent")
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @default(now())
+
+  @@index([user_id])
+  @@index([recipient_id])
+  @@index([group_id])
+  @@index([created_at])
+}
+
+model PushSubscription {
+  id              Int       @id @default(autoincrement())
+  user_id         Int?
+  user            User?     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  endpoint        String    @unique
+  subscription    Json
+  user_agent      String?
+  failure_count   Int       @default(0)
+  last_success_at DateTime?
+  last_failure_at DateTime?
+  created_at      DateTime  @default(now())
+  updated_at      DateTime  @default(now())
+
+  @@index([user_id])
+}
+
+model PasswordReset {
+  id         Int       @id @default(autoincrement())
+  user_id    Int?
+  user       User?     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  email      String
+  otp        String
+  purpose    String    @default("password_reset")
+  used       Boolean   @default(false)
+  expires_at DateTime
+  created_at DateTime  @default(now())
+
+  @@index([user_id, purpose, used])
+}
+
+model ProfileUpdateRequest {
+  id               Int        @id @default(autoincrement())
+  user_id          Int?
+  user             User?      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  requested_changes Json
+  status           String     @default("pending")
+  created_at       DateTime   @default(now())
+  handled_at       DateTime?
+  admin_id         Int?
+  rejection_reason String?
+  user_notified    Boolean    @default(false)
+
+  @@index([user_id, status, created_at])
+}
+
+model DailySummary {
+  date      DateTime @id @db.Date
+  content   String
+  updated_at DateTime @default(now())
+}
+
+model AuditLog {
+  id            Int       @id @default(autoincrement())
+  timestamp     DateTime  @default(now()) @db.Timestamptz
+  actor_id      Int?
+  actor         User?     @relation(fields: [actor_id], references: [id], onDelete: SetNull)
+  actor_ip      String?   @db.VarChar(45)
+  actor_user_agent String?
+  
+  action        String    @db.VarChar(100)
+  resource_type String    @db.VarChar(100)
+  resource_id   String?   @db.VarChar(255)
+  
+  old_values    Json?
+  new_values    Json?
+  changes       Json?
+  
+  company_id    String?
+  tenant        Tenant?   @relation(fields: [company_id], references: [id], onDelete: SetNull)
+  
+  status        String    @default("success")
+  error_message String?
+  
+  @@index([timestamp])
+  @@index([actor_id, timestamp])
+  @@index([company_id, timestamp])
+  @@index([resource_type, resource_id])
+  @@index([action])
+}
+
+model Kudos {
+  id          Int       @id @default(autoincrement())
+  giver_id    Int
+  receiver_id Int
+  giver       User      @relation("KudosGiver", fields: [giver_id], references: [id], onDelete: Cascade)
+  receiver    User      @relation("KudosReceiver", fields: [receiver_id], references: [id], onDelete: Cascade)
+  message     String    @db.Text
+  category    String    @default("general")
+  is_public   Boolean   @default(true)
+  created_at   DateTime  @default(now()) @db.Timestamptz
+  
+  @@index([receiver_id, created_at])
+  @@index([giver_id, created_at])
+}
+
+model PulseSurvey {
+  id          Int       @id @default(autoincrement())
+  company_id  String
+  tenant      Tenant    @relation(fields: [company_id], references: [id], onDelete: Cascade)
+  title       String
+  questions   Json
+  is_active   Boolean   @default(true)
+  schedule    String?
+  created_by  Int?
+  created_at  DateTime  @default(now()) @db.Timestamptz
+  closed_at   DateTime?
+  
+  @@index([company_id, is_active])
+}
+
+model PulseSurveyResponse {
+  id          Int           @id @default(autoincrement())
+  survey_id   Int
+  survey      PulseSurvey   @relation(fields: [survey_id], references: [id], onDelete: Cascade)
+  user_id     Int
+  user        User          @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  answers     Json
+  submitted_at DateTime     @default(now()) @db.Timestamptz
+  
+  @@unique([survey_id, user_id])
+  @@index([survey_id, submitted_at])
+}
+
+model UserPermission {
+  id           Int       @id @default(autoincrement())
+  user_id      Int
+  user         User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  permission   String    @db.VarChar(100)
+  resource_id  String?   @db.VarChar(255)
+  is_granted   Boolean   @default(true)
+  granted_by   Int?
+  granted_at   DateTime  @default(now()) @db.Timestamptz
+  expires_at   DateTime?
+  
+  @@unique([user_id, permission, resource_id])
+  @@index([user_id])
+  @@index([permission])
+}

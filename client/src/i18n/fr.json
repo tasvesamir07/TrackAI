@@ -1,0 +1,47 @@
+{
+  "common": {
+    "dashboard": "Tableau de bord",
+    "settings": "Paramètres",
+    "profile": "Profil",
+    "logout": "Déconnexion",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "search": "Rechercher",
+    "loading": "Chargement..."
+  },
+  "nav": {
+    "home": "Accueil",
+    "employees": "Employés",
+    "projects": "Projets",
+    "tasks": "Tâches",
+    "leaves": "Congés",
+    "reports": "Rapports",
+    "attendance": "Présence"
+  },
+  "auth": {
+    "login": "Connexion",
+    "signup": "S'inscrire",
+    "forgotPassword": "Mot de passe oublié",
+    "welcome": "Bienvenue"
+  },
+  "employees": {
+    "addEmployee": "Ajouter un employé",
+    "employeeList": "Liste des employés",
+    "name": "Nom",
+    "email": "Email",
+    "role": "Rôle",
+    "department": "Département"
+  },
+  "projects": {
+    "addProject": "Ajouter un projet",
+    "projectName": "Nom du projet",
+    "status": "Statut",
+    "progress": "Progression"
+  },
+  "attendance": {
+    "checkIn": "Pointer",
+    "checkOut": "Pointer la sortie",
+    "present": "Présent",
+    "absent": "Absent"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "common": {
+    "dashboard": "لوحة التحكم",
+    "settings": "الإعدادات",
+    "profile": "الملف الشخصي",
+    "logout": "تسجيل الخروج",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "search": "بحث",
+    "loading": "جاري التحميل..."
+  },
+  "nav": {
+    "home": "الرئيسية",
+    "employees": "الموظفون",
+    "projects": "المشاريع",
+    "tasks": "المهام",
+    "leaves": "الإجازات",
+    "reports": "التقارير",
+    "attendance": "الحضور"
+  },
+  "auth": {
+    "login": "تسجيل الدخول",
+    "signup": "إنشاء حساب",
+    "forgotPassword": "نسيت كلمة المرور",
+    "welcome": "مرحباً"
+  },
+  "employees": {
+    "addEmployee": "إضافة موظف",
+    "employeeList": "قائمة الموظفين",
+    "name": "الاسم",
+    "email": "البريد الإلكتروني",
+    "role": "الدور",
+    "department": "القسم"
+  },
+  "projects": {
+    "addProject": "إضافة مشروع",
+    "projectName": "اسم المشروع",
+    "status": "الحالة",
+    "progress": "التقدم"
+  },
+  "attendance": {
+    "checkIn": "تسجيل الدخول",
+    "checkOut": "تسجيل الخروج",
+    "present": "حاضر",
+    "absent": "غائب"
+  }
+}

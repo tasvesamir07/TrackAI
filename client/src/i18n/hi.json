@@ -1,0 +1,31 @@
+{
+  "common": {
+    "loading": "लोड हो रहा है...",
+    "error": "त्रुटि",
+    "success": "सफलता",
+    "cancel": "रद्द करें",
+    "save": "सहेजें",
+    "delete": "हटाएं",
+    "edit": "संपादित करें",
+    "add": "जोड़ें",
+    "search": "खोजें",
+    "filter": "फ़िल्टर"
+  },
+  "navigation": {
+    "dashboard": "डैशबोर्ड",
+    "employees": "कर्मचारी",
+    "attendance": "उपस्थिति",
+    "leave": "अवकाश",
+    "payroll": "वेतन",
+    "reports": "रिपोर्ट",
+    "settings": "सेटिंग्स"
+  },
+  "auth": {
+    "login": "लॉग इन",
+    "logout": "लॉग आउट",
+    "signup": "साइन अप",
+    "email": "ईमेल",
+    "password": "पासवर्ड",
+    "forgotPassword": "पासवर्ड भूल गए?"
+  }
+}

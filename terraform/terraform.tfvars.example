@@ -1,0 +1,32 @@
+# terraform/terraform.tfvars.example
+# Copy this to terraform.tfvars and fill in your values
+
+# AWS Configuration
+aws_region  = "us-east-1"
+project_name = "track-ai"
+environment = "production"
+
+# Your IP for SSH access (restrict this!)
+admin_ip = "YOUR_IP_ADDRESS/32"
+
+# SSH Key Pair (create in AWS Console first)
+ssh_key_name = "your-key-pair-name"
+
+# Database Configuration
+db_instance_class      = "db.t3.micro"
+db_allocated_storage   = 20
+db_max_allocated_storage = 100
+db_name                = "trackai"
+db_username            = "dbadmin"
+db_password            = "STRONG_PASSWORD_HERE"  # Change this!
+
+# Redis Configuration
+redis_node_type = "cache.t3.micro"
+
+# EC2 Configuration
+ami_id         = "ami-0c55b159cbfafe1f0"  # Ubuntu 22.04 LTS (us-east-1)
+ec2_instance_type = "t3.small"
+ec2_volume_size   = 30
+
+# Required: AWS credentials (recommended: use AWS_PROFILE or IAM role)
+# Do not commit this file to version control!

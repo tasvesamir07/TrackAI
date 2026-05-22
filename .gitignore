@@ -1,0 +1,131 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+.npm/
+.yarn/
+.yarn/cache/
+.yarn/unplugged/
+.yarn/build-state.yml
+.yarn/install-state.gz
+
+# Build outputs / caches
+dist/
+build/
+coverage/
+.nyc_output/
+*.tsbuildinfo
+.eslintcache
+.vite/
+.vite-temp/
+.cache/
+.parcel-cache/
+.turbo/
+.next/
+.nuxt/
+.svelte-kit/
+
+# Runtime / generated app data
+server/uploads/
+uploads/
+*.sqlite
+*.db
+
+# Environment and secrets
+.env
+.env.*
+.envrc
+.env.local
+.env.*.local
+**/.env.production
+**/.env.production.local
+!.env.example
+!.env.backup.example
+
+# Credentials / certificates
+*.pem
+*.key
+*.crt
+credentials.json
+service-account.json
+*.p12
+*.pfx
+*.jks
+secrets/
+keys/
+.firebase/
+.aws/
+.gcloud/
+.ssh/
+*.secret
+*.private
+
+# Logs
+logs/
+*.log
+*.pid
+*.pid.lock
+*.seed
+*.stackdump
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log.*
+
+# OS / Editor / local background files
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/
+.vs/
+*.swp
+*.swo
+*~
+*.sublime-*
+
+# Local tooling state
+.claude
+.claude/
+.codex/
+.agents/
+.cloud/
+.temp/
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Test outputs
+playwright-report/
+test-results/
+__snapshots__/
+
+# Backups
+backup-*/
+backup-*
+*.bak
+*.old
+*.orig
+*.backup
+
+# Generated outputs
+graphify-out/
+
+# GitHub workflows/config (ignored per your request)
+.github/
+
+# Documentation (ignored per your request)
+*.md
+CLAUDE.md
+
+# Images (ignored per your request)
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+*.svg
+*.bmp
+*.ico
+node_modules
