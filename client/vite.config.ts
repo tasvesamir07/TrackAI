@@ -98,7 +98,7 @@ VitePWA({
     pure: ['console.log', 'console.info', 'console.debug', 'console.trace']
   },
   build: {
-    outDir: process.env.DOCKER_BUILD ? 'dist' : '../server/public',
+    outDir: (process.env.DOCKER_BUILD || process.env.VERCEL) ? 'dist' : '../server/public',
     emptyOutDir: true,
     modulePreload: {
       resolveDependencies: (_filename, deps, context) => {
